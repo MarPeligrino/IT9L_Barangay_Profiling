@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Incident_Reports extends Model
+class IncidentReports extends Model
 {
+    protected $table = 'incident_reports';
     protected $fillable = ['resident_origin_id', 'barangay_employee_id', 'report_date', 'remarks', 'status'];
 
     public function resident() {
@@ -13,6 +14,6 @@ class Incident_Reports extends Model
     }
 
     public function reportedBy() {
-        return $this->belongsTo(Barangay_Employee::class, 'barangay_employee_id');
+        return $this->belongsTo(BarangayEmployee::class, 'barangay_employee_id');
     }
 }

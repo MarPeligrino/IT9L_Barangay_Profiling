@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('business_permits', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('business_id')->constrained();
+            $table->foreignId('business_id')->constrained()->onDelete('cascade');
             $table->foreignId('barangay_employee_id')->constrained();
             $table->date('issued_date');
             $table->date('expiry_date');
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('business__permits');
+        Schema::dropIfExists('business_permits');
     }
 };

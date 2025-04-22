@@ -13,6 +13,10 @@ class Business extends Model
     }
 
     public function type() {
-        return $this->belongsTo(Business_Type::class, 'business_type_id');
+        return $this->belongsTo(BusinessType::class, 'business_type_id');
+    }
+
+    public function permit() {
+        return $this->hasMany(BusinessPermit::class, 'business_permit_id');
     }
 }

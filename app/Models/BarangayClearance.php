@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Barangay_Clearance extends Model
+class BarangayClearance extends Model
 {
+    protected $table = 'barangay_clearances';
     protected $fillable = ['resident_id', 'barangay_employee_id', 'clearance_type_id', 'purpose', 'issued_date', 'status'];
 
     public function resident() {
@@ -13,10 +14,10 @@ class Barangay_Clearance extends Model
     }
 
     public function type() {
-        return $this->belongsTo(Clearance_Type::class, 'clearance_type_id');
+        return $this->belongsTo(ClearanceType::class, 'clearance_type_id');
     }
 
     public function issuedBy() {
-        return $this->belongsTo(Barangay_Employee::class, 'barangay_employee_id');
+        return $this->belongsTo(BarangayEmployee::class, 'barangay_employee_id');
     }
 }

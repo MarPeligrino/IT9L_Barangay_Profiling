@@ -16,6 +16,10 @@ class Resident extends Model
     }
 
     public function familyRole() {
-        return $this->belongsTo(Family_Role::class);
+        return $this->belongsTo(FamilyRole::class);
+    }
+
+    public function businesses() {
+        return $this->hasMany(Business::class, 'owner_id');
     }
 }

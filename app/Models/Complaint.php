@@ -17,10 +17,10 @@ class Complaint extends Model
     }
 
     public function incident() {
-        return $this->belongsTo(Incident_Reports::class);
+        return $this->belongsTo(IncidentReports::class);
     }
 
     public function handledBy() {
-        return $this->belongsTo(Barangay_Employee::class, 'barangay_employee_id');
+        return $this->belongsTo(BarangayEmployee::class, 'barangay_employee_id');
     }
 }

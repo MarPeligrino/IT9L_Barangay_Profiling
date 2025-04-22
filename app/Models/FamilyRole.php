@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Family_Role extends Model
+class FamilyRole extends Model
 {
+    protected $table = 'family_roles';
     protected $fillable = ['role', 'relationship'];
 
     public function residents() {
