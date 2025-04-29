@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BarangayClearance extends Model
+class BarangayCertificate extends Model
 {
-    protected $table = 'barangay_clearances';
+    protected $table = 'barangay_certificates';
     protected $fillable = ['resident_id', 'barangay_employee_id', 'clearance_type_id', 'purpose', 'issued_date', 'status'];
 
     public function resident() {

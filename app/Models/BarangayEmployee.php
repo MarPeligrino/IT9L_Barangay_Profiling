@@ -12,4 +12,10 @@ class BarangayEmployee extends Model
     public function position() {
         return $this->belongsTo(BarangayPosition::class);
     }
+
+    public function business() {
+        return $this->hasMany(Business::class);
+
+    }
+
 }

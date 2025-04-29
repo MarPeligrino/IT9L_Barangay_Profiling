@@ -47,3 +47,17 @@ This is a Laravel-based web application for barangay profiling, built for IT9L.
 === Notes ===
 - Do NOT commit your `.env` file or `vendor/` folder to GitHub.
 - Make sure you have PHP, Composer, MySQL, and Node.js installed.
+
+
+
+CHANGELOG
+
+04/29
+@ 1300 - Creating ResidentsController
+@ 1314 - Finished ResidentsController V1
+@ 1319 - Starting to create blades for simple views for residents
+@ 1324 - Created create,edit,index blades and added routes for residents // FIRST TEST FOR RESIDENTS
+@ 1335 - Editing create blade and adding dummy values for household, current address, familyrole. Still testing
+@ 1344 - Still testing, adding NATIONALITY and RELIGION to residents. Fixing CREATE BLADE.
+@ 1355 - Testing still for BLADE. Not saving?
+@ 1415 - Saved RESIDENT sucessfully, fixed INDEX, trying to fix now EDIT

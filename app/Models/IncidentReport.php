@@ -4,28 +4,27 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Complaint extends Model
+class IncidentReport extends Model
 {
+    protected $table = 'incident_reports';
     protected $fillable = [
-        'IncidentID',
-        'ComplaintID',
         'BarangayEmployeeID',
+        'Report Date',
         'Remarks',
         'Status',
     ];
 
+    // Relationships
+
     public function residents()
     {
-        return $this->belongsToMany(Resident::class, 'complaint_report_party')
+        return $this->belongsToMany(Resident::class, 'incident_report_party')
                     ->withPivot('role')
                     ->withTimestamps();
     }
+
     public function barangayEmployee()
     {
-        return $this->belongsTo(BarangayEmployee::class);
-    }
-    public function incident()
-    {
-        return $this->belongsTo(IncidentReport::class);
+        return $this->belongsTo(BarangayEmployee::class, 'BarangayEmployeeID', 'ID');
     }
 }

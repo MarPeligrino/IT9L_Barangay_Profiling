@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class BusinessPermit extends Model
 {
     protected $table = 'business_permits';
-    protected $fillable = ['business_id', 'barangay_employee_id', 'issued_date', 'expiry_date', 'status'];
+    protected $fillable = ['business_id', 'barangay_employee_id', 'issued_date', 'expiry_date', 'status','fee'];
 
     public function business() {
         return $this->belongsTo(Business::class);

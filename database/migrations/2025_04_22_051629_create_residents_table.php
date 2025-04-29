@@ -14,18 +14,20 @@ return new class extends Migration
         Schema::create('residents', function (Blueprint $table) {
             $table->id();
             
-            $table->foreignId('household_id')->constrained();
+            $table->foreignId('household_id')->constrained()->onDelete('cascade');
             $table->foreignId('family_role_id')->constrained();
+            $table->foreignId('current_address_id')->nullable()->constrained()->onDelete('set null');
             $table->string('first_name');
             $table->string('middle_name')->nullable();
             $table->string('last_name');
             $table->integer('age');
             $table->enum('sex', ['Male', 'Female']);
-            $table->text('address');
             $table->date('birthday');
-            $table->string('civil_status');
+            $table->enum('civil_status', ['Single', 'Married', 'Divorced', 'Widowed', 'Separated']);
             $table->string('contact_number')->nullable();
             $table->string('occupation')->nullable();
+            $table->string('nationality')->nullable();
+            $table->string('religion')->nullable();
             
             $table->timestamps();
         });

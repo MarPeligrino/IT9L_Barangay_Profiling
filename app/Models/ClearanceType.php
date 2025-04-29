@@ -10,6 +10,6 @@ class ClearanceType extends Model
     protected $fillable = ['clearance_name', 'description', 'validity', 'fee'];
 
     public function clearances() {
-        return $this->hasMany(BarangayClearance::class);
+        return $this->hasMany(BarangayCertificate::class);
     }
 }

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('certificate_transactions', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('business_permit_id')->constrained()->onDelete('cascade');
+            $table->foreignId('certificate_id')->constrained('barangay_certificates')->onDelete('cascade');
             $table->decimal('amount_paid', 8, 2);
             $table->date('payment_date')->default(now());
             $table->enum('payment_status', ['Paid', 'Pending', 'Failed'])->default(('Pending'));
