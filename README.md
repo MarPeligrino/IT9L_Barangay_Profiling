@@ -61,3 +61,6 @@ CHANGELOG
 @ 1344 - Still testing, adding NATIONALITY and RELIGION to residents. Fixing CREATE BLADE.
 @ 1355 - Testing still for BLADE. Not saving?
 @ 1415 - Saved RESIDENT sucessfully, fixed INDEX, trying to fix now EDIT
+@ 1425 - Committed to repository, fixed EDIT and DELETE, will now try to add controller for HOUSEHOLD
+@ 1435 - Currently editing HOUSECONTROLLER, added it into routes.
+@ 1445 - Still editing HOUSEHOLDCONTROLLER, will now commit this.

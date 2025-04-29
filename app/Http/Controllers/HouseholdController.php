@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Household;
 
 class HouseholdController extends Controller
 {
@@ -11,7 +12,8 @@ class HouseholdController extends Controller
      */
     public function index()
     {
-        //
+        $households = Household::all();
+        return view('households.index', compact('households'));
     }
 
     /**
@@ -19,7 +21,7 @@ class HouseholdController extends Controller
      */
     public function create()
     {
-        //
+        return view('households.create');
     }
 
     /**
@@ -27,15 +29,27 @@ class HouseholdController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'purok' => 'required|string|max:255',
+            'street_number' => 'required|string|max:255',
+            'street_name' => 'required|string|max:255',
+            'apartment_unit' => 'nullable|string|max:255',
+            'province' => 'required|string|max:255',
+            'postal_code' => 'nullable|string|max:255',
+            'country' => 'required|string|max:255'
+        ]);
+
+        Household::create($validated);
+
+        return redirect()->route('households.index')->with('success', 'Household added!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Household $household)
     {
-        //
+        return view('households.show', compact('household'));
     }
 
     /**
@@ -43,7 +57,7 @@ class HouseholdController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('households.edit', compact('household'));
     }
 
     /**

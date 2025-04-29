@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('households', function (Blueprint $table) {
             $table->id();
             
-            $table->string('purok')->nullable();
-            $table->string('street_number')->nullable();
-            $table->string('street_name')->nullable();
+            $table->string('purok');
+            $table->string('street_number');
+            $table->string('street_name');
             $table->string('apartment_unit')->nullable();
-            $table->string('province')->nullable();
+            $table->string('province');
             $table->string('postal_code')->nullable();
-            $table->string('country')->nullable();
+            $table->string('country');
 
             $table->timestamps();
         });
