@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('incident_reports', function (Blueprint $table) {
+        Schema::create('permit_transactions', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('barangay_employee_id')->constrained();
-            $table->date('report_date');
-            $table->text('remarks')->nullable();
-            $table->string('status');
+            $table->foreignId('business_permit_id')->constrained()->onDelete('cascade');
+            $table->decimal('amount_paid', 8, 2);
+            $table->date('payment_date')->default(now());
+            $table->enum('payment_status', ['Paid', 'Pending', 'Failed'])->default(('Pending'));
 
             $table->timestamps();
         });
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('incident__reports');
+        Schema::dropIfExists('permit_transactions');
     }
 };

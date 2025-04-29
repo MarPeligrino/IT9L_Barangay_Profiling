@@ -15,6 +15,8 @@ class Resident extends Model
         return $this->belongsTo(Household::class);
     }
 
+    // Resident::with(['household', 'familyRole'])->get();
+
     public function familyRole() {
         return $this->belongsTo(FamilyRole::class);
     }
