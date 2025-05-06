@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BarangayEmployee;
 use Illuminate\Http\Request;
 
 class BarangayEmployeeController extends Controller
@@ -11,7 +12,8 @@ class BarangayEmployeeController extends Controller
      */
     public function index()
     {
-        //
+        $barangayemployees = BarangayEmployee::all();
+        return view('barangayemployees.index', compact('barangayemployees'));
     }
 
     /**
@@ -19,7 +21,7 @@ class BarangayEmployeeController extends Controller
      */
     public function create()
     {
-        //
+        return view('barangayemployees.create');
     }
 
     /**
@@ -27,7 +29,13 @@ class BarangayEmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'position_name' => 'required|string|max:255',
+            'description' => 'required|string|max:255'
+        ]);
+
+        BarangayPosition::create($validated);
+        return redirect()->route('barangaypositions.index')->with('sucess', 'BarangayPosition Added');
     }
 
     /**

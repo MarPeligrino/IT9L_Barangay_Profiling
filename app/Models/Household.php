@@ -10,7 +10,7 @@ class Household extends Model
         'purok',
         'street_number',
         'street_name',
-        'apartment',
+        'apartment_unit',
         'province',
         'postal_code',
         'country',

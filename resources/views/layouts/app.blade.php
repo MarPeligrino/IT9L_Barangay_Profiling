@@ -21,6 +21,16 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('residents.index') }}">Residents</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('households.index') }}">Households</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('familyroles.index') }}">FamilyRoles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('barangaypositions.index') }}">BarangayPosition</a>
+                    </li>
+                    
                     <!-- Add more nav links here if needed -->
                 </ul>
             </div>

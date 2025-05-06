@@ -55,7 +55,7 @@ class HouseholdController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Household $household)
     {
         return view('households.edit', compact('household'));
     }
@@ -63,16 +63,32 @@ class HouseholdController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Household $household)
     {
-        //
+        $validated = $request->validate([
+            'purok' => 'required|string|max:255',
+            'street_number' => 'required|string|max:255',
+            'street_name' => 'required|string|max:255',
+            'apartment_unit' => 'nullable|string|max:255',
+            'province' => 'required|string|max:255',
+            'postal_code' => 'nullable|string|max:255',
+            'country' => 'required|string|max:255'
+        ]);
+
+        $household->update($validated);
+
+        return redirect()->route('households.index')->with('success', "Household updated successfully.");
+
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Household $household)
     {
-        //
+        $household->delete();
+
+        return redirect()->route('households.index')->with('success', "Household deleted successfully.");
     }
 }

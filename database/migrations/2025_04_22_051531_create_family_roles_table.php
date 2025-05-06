@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('family_roles', function (Blueprint $table) {
             $table->id();
-            $table->string('role');
+            $table->string('role'); //Need to change this idk nganu naka STRING ni before
             $table->string('relationship');
             $table->timestamps();
         });

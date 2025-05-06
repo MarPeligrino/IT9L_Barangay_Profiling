@@ -64,3 +64,19 @@ CHANGELOG
 @ 1425 - Committed to repository, fixed EDIT and DELETE, will now try to add controller for HOUSEHOLD
 @ 1435 - Currently editing HOUSECONTROLLER, added it into routes.
 @ 1445 - Still editing HOUSEHOLDCONTROLLER, will now commit this.
+
+@ 1505 - Done editing HOUSEHOLDCONTROLLER, trying to create INDEX BLADE.
+@ 1515 - Done creating INDEX BLADE for household and updated LAYOUT for navbar. Editing now edit blade
+@ 1525 - Done editing EDIT BLADE, will now try to create CREATE BLADE.
+
+05/05
+@ 1527 - Doing FAMILYROLE CONTROLLER
+@ 1545 - Done doing CONTROLLER now making INDEX BLADE
+@ 1600 - Done index now doing EDIT and CREATE BLADE also edited familyRole into enum since it's limited (needs more thought)
+@ 1615 - Testing things. Returned role to STRING since it's the HEAD, etc.
+@ 1630 - Finishing BARANGAYPOSITION CONTROLLER
+@ 1635 - Doing INDEX BLADE now will continue later
+
+05/06
+@ 0520 - Continuing the BLADEs now 
+@ 0542 - Finished creating blades and BarangayPositions moving on to barangayEmployees
