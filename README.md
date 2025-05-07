@@ -94,3 +94,6 @@ CHANGELOG
 @ 1329 - FInishing up with the blades Done with index blades
 @ 1345 - Done with all the blades, will now add routes and then test
 @ 1350 - Still needs testing and edit seeders for familyroles so I can add head and then need data for businessType as well. Will now commit and push changes
+@ 2200 - Will now continue with editing
+@ 2223 - Done with blades and creating blades and testing now moving on to CURRENTADDRESSCONTROLLER 
+@ 2238 - omfg I have to edit household table to generalized address table and somehow link it to residents and permit to normalize, I will commit this first to a seaprate branch just in case I want to go back

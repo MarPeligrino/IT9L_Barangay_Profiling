@@ -48,7 +48,7 @@ class BusinessController extends Controller
         ]);
 
         Business::create($validated);
-        return redirect()->route('barangayemployees.index')->with('sucess', 'Business Added');
+        return redirect()->route('businesses.index')->with('sucess', 'Business Added');
     }
 
     /**
@@ -67,7 +67,7 @@ class BusinessController extends Controller
         $owners = Resident::all();
         $businesstypes = BusinessType::all();
 
-        return view('households.edit', compact('household', 'owners', 'businesstypes'));
+        return view('businesses.edit', compact('business', 'owners', 'businesstypes'));
     }
 
     /**

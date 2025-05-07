@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class CurrentAddress extends Model
+
 {
     protected $fillable = [
         'purok',

@@ -27,6 +27,7 @@
                 <tr>
                     <td>{{ $business->owner->first_name ?? 'N/A' }}  {{ $business->owner->last_name ?? 'N/A' }}</td>
                     <td>{{ $business->type->name }}</td>
+                    <td>{{ $business->business_name }}</td>
                     <td>{{ $business->house_number ?? 'N/A'}} {{ $business->street_name ?? 'N/A'}} {{ $business->village ?? 'N/A'}} {{ $business->barangay ?? 'N/A'}} {{ $business->city ?? 'N/A'}} {{ $business->province ?? 'N/A'}} {{ $business->postal_code ?? 'N/A'}}</td>
                     <td>
                         <a href="{{ route('businesses.show', $business->id) }}" class="btn btn-info btn-sm">View</a>
@@ -40,7 +41,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="6" class="text-center">No Businesses found.</td>
+                    <td colspan="5" class="text-center">No Businesses found.</td>
                 </tr>
             @endforelse
         </tbody>

@@ -65,7 +65,7 @@
             <input type="text" name="postal_code" class="form-control" required>
         </div>
 
-        <button type="submit" class="btn btn-success mt-3">Create BarangayEmployee</button>
+        <button type="submit" class="btn btn-success mt-3">Create Business</button>
     </form>
 </div>
 @endsection

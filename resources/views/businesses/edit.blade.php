@@ -32,7 +32,7 @@
 
         <div class="form-group mb-3">
             <label>Business Name</label>
-            <input type="text" name="business_name" class="form-control" value="{{ $business->name }}" required>
+            <input type="text" name="business_name" class="form-control" value="{{ $business->business_name }}" required>
         </div>
 
         <div class="form-group mb-3">
@@ -70,7 +70,7 @@
             <input type="text" name="postal_code" class="form-control" value="{{ $business->postal_code }}" required>
         </div>
 
-        <button type="submit" class="btn btn-success mt-3">Create BarangayEmployee</button>
+        <button type="submit" class="btn btn-success mt-3">Update Business</button>
     </form>
 </div>
 @endsection
