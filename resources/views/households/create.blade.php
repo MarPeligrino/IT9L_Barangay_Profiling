@@ -13,8 +13,8 @@
         </div>
 
         <div class="form-group mb-3">
-            <label>Street Number</label>
-            <input type="text" name="street_number" class="form-control" required>
+            <label>House Number</label>
+            <input type="text" name="house_number" class="form-control" required>
         </div>
 
         <div class="form-group mb-3">
@@ -23,8 +23,18 @@
         </div>
 
         <div class="form-group mb-3">
-            <label>Apartment/Unit</label>
-            <input type="text" name="apartment_unit" class="form-control">
+            <label>Village</label>
+            <input type="text" name="village" class="form-control">
+        </div>
+
+        <div class="form-group mb-3">
+            <label>Barangay</label>
+            <input type="text" name="barangay" class="form-control" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label>City</label>
+            <input type="text" name="city" class="form-control">
         </div>
 
         <div class="form-group mb-3">
@@ -34,12 +44,7 @@
 
         <div class="form-group mb-3">
             <label>Postal Code</label>
-            <input type="text" name="postal_code" class="form-control">
-        </div>
-
-        <div class="form-group mb-3">
-            <label>Country</label>
-            <input type="text" name="country" class="form-control" required>
+            <input type="text" name="postal_code" class="form-control" required>
         </div>
         
         <button type="submit" class="btn btn-success mt-3">Create Household</button>

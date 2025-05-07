@@ -30,6 +30,12 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('barangaypositions.index') }}">BarangayPosition</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('barangayemployees.index') }}">BarangayEmployee</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('businesses.index') }}">Business</a>
+                    </li>
                     
                     <!-- Add more nav links here if needed -->
                 </ul>

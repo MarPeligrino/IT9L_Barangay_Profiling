@@ -8,12 +8,13 @@ class CurrentAddress extends Model
 {
     protected $fillable = [
         'purok',
-        'street_number',
+        'house_number',
         'street_name',
-        'apartment_unit',
+        'village',
+        'barangay',
+        'city',
         'province',
-        'postal_code',
-        'country',
+        'postal_code'
     ];
 
     public function residents()

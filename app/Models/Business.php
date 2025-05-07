@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Business extends Model
 {
-    protected $fillable = ['owner_id', 'business_type_id', 'business_name', 'address'];
+    protected $fillable = ['owner_id', 'business_type_id', 'business_name', 'house_number','street_name','village','barangay','city','province','postal_code'];
 
     public function owner() {
         return $this->belongsTo(Resident::class, 'owner_id');

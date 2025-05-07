@@ -37,7 +37,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="5" class="text-center">No familyroles found.</td>
+                    <td colspan="3" class="text-center">No familyroles found.</td>
                 </tr>
             @endforelse
         </tbody>

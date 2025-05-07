@@ -31,12 +31,13 @@ class HouseholdController extends Controller
     {
         $validated = $request->validate([
             'purok' => 'required|string|max:255',
-            'street_number' => 'required|string|max:255',
+            'house_number' => 'required|string|max:255',
             'street_name' => 'required|string|max:255',
-            'apartment_unit' => 'nullable|string|max:255',
+            'village' => 'nullable|string|max:255',
+            'barangay' => 'required|string|max:255',
+            'city' => 'nullable|string|max:255',
             'province' => 'required|string|max:255',
-            'postal_code' => 'nullable|string|max:255',
-            'country' => 'required|string|max:255'
+            'postal_code' => 'required|string|max:255'
         ]);
 
         Household::create($validated);
@@ -67,12 +68,13 @@ class HouseholdController extends Controller
     {
         $validated = $request->validate([
             'purok' => 'required|string|max:255',
-            'street_number' => 'required|string|max:255',
+            'house_number' => 'required|string|max:255',
             'street_name' => 'required|string|max:255',
-            'apartment_unit' => 'nullable|string|max:255',
+            'village' => 'nullable|string|max:255',
+            'barangay' => 'required|string|max:255',
+            'city' => 'nullable|string|max:255',
             'province' => 'required|string|max:255',
-            'postal_code' => 'nullable|string|max:255',
-            'country' => 'required|string|max:255'
+            'postal_code' => 'required|string|max:255'
         ]);
 
         $household->update($validated);

@@ -80,3 +80,17 @@ CHANGELOG
 05/06
 @ 0520 - Continuing the BLADEs now 
 @ 0542 - Finished creating blades and BarangayPositions moving on to barangayEmployees
+
+05/07
+
+@ 0958 - Working now to continue BARANGAYEMPLOYEECONTROLLER
+@ 1055 - Finishing up EMPLOYEE BLADES
+@ 1110 - Fixing EMPLOYEE BLADES while testing
+@ 1125 - Done fixing EMPLOYEES controller and BLADES now doing BUSINESS
+@ 1155 - Updating database for ADDRESS, will have to edit the rest involved on that database.
+@ 1219 - Still updating the database for ADDRESS, trying to fix the rest
+@ 1247 - Still fixing the rest, now trying to fix HOUSEHOLD CONTROLLER after doing the BLADES
+@ 1304 - Done with the HOUSEHOLDS everything fix, completed BUSINESS CONTROLLER now creating BLADES
+@ 1329 - FInishing up with the blades Done with index blades
+@ 1345 - Done with all the blades, will now add routes and then test
+@ 1350 - Still needs testing and edit seeders for familyroles so I can add head and then need data for businessType as well. Will now commit and push changes

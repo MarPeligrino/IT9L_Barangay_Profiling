@@ -15,12 +15,13 @@ return new class extends Migration
             $table->id();
             
             $table->string('purok');
-            $table->string('street_number');
+            $table->string('house_number');
             $table->string('street_name');
-            $table->string('apartment_unit')->nullable();
+            $table->string('village');
+            $table->string('barangay');
+            $table->string('city');
             $table->string('province');
             $table->string('postal_code')->nullable();
-            $table->string('country');
 
             $table->timestamps();
         });

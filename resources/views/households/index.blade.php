@@ -16,10 +16,13 @@
         <thead>
             <tr>
                 <th>Purok</th>
-                <th>Street Number</th>
+                <th>House Number</th>
                 <th>Street Name</th>
+                <th>Village</th>
+                <th>Barangay</th>
+                <th>City</th>
                 <th>Province</th>
-                <th>Country</th>
+                <th>Postal Code</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -27,10 +30,13 @@
             @forelse ($households as $household)
                 <tr>
                     <td>{{ $household->purok }}</td>
-                    <td>{{ $household->street_number }}</td>
+                    <td>{{ $household->house_number }}</td>
                     <td>{{ $household->street_name }}</td>
+                    <td>{{ $household->village }}</td>
+                    <td>{{ $household->barangay }}</td>
+                    <td>{{ $household->city }}</td>
                     <td>{{ $household->province }}</td>
-                    <td>{{ $household->country }}</td>
+                    <td>{{ $household->postal_code }}</td>
                     <td>
                         <a href="{{ route('households.show', $household->id) }}" class="btn btn-info btn-sm">View</a>
                         <a href="{{ route('households.edit', $household->id) }}" class="btn btn-warning btn-sm">Edit</a>
@@ -43,7 +49,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="5" class="text-center">No households found.</td>
+                    <td colspan="9" class="text-center">No households found.</td>
                 </tr>
             @endforelse
         </tbody>
