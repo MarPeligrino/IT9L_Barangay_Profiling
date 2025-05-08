@@ -22,7 +22,7 @@
                         <a class="nav-link" href="{{ route('residents.index') }}">Residents</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('households.index') }}">Households</a>
+                        <a class="nav-link" href="{{ route('addresses.index') }}">Addresses</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('familyroles.index') }}">FamilyRoles</a>

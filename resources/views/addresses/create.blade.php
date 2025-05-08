@@ -2,9 +2,9 @@
 
 @section('content')
 <div class="container">
-    <h1>Add New Household</h1>
+    <h1>Add New Address</h1>
 
-    <form action="{{ route('households.store') }}" method="POST">
+    <form action="{{ route('addresses.store') }}" method="POST">
         @csrf
 
         <div class="form-group mb-3">
@@ -47,7 +47,7 @@
             <input type="text" name="postal_code" class="form-control" required>
         </div>
         
-        <button type="submit" class="btn btn-success mt-3">Create Household</button>
+        <button type="submit" class="btn btn-success mt-3">Create Address</button>
     </form>
 </div>
 @endsection

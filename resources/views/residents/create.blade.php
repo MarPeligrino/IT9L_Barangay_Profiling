@@ -10,8 +10,8 @@
         <div class="form-group mb-3">
             <label>Household</label>
             <select name="household_id" class="form-control" required>
-                @foreach ($households as $household)
-                    <option value="{{ $household->id }}">{{ $household->street_name ?? 'No Street' }}</option>
+                @foreach ($households as $address)
+                    <option value="{{ $address->id }}">{{ $address->street_name ?? 'No Street' }}</option>
                 @endforeach
             </select>
         </div>

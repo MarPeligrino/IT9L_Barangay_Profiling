@@ -11,9 +11,9 @@
         <div class="form-group mb-3">
             <label>Household</label>
             <select name="household_id" class="form-control" required>
-                @foreach ($households as $household)
-                    <option value="{{ $household->id }}" {{ $resident->household_id == $household->id ? 'selected' : '' }}>
-                        {{ $household->street_name ?? 'No Street' }}
+                @foreach ($households as $address)
+                    <option value="{{ $address->id }}" {{ $resident->household_id == $address->id ? 'selected' : '' }}>
+                        {{ $address->street_name ?? 'No Street' }}
                     </option>
                 @endforeach
             </select>

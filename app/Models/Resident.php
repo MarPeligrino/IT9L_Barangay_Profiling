@@ -25,7 +25,12 @@ class Resident extends Model
 
     public function household()
     {
-        return $this->belongsTo(Household::class);
+        return $this->belongsTo(Address::class, 'household_id');
+    }
+    
+    public function currentAddress()
+    {
+        return $this->belongsTo(Address::class, 'current_address_id');
     }
 
     public function incidentReports()
@@ -41,12 +46,7 @@ class Resident extends Model
                     ->withPivot('role')
                     ->withTimestamps();
     }
-
-    public function currentAddress()
-    {
-        return $this->belongsTo(CurrentAddress::class, 'current_address_id');
-    }
-
+    
     public function familyRole()
     {
         return $this->belongsTo(FamilyRole::class, 'family_role_id');

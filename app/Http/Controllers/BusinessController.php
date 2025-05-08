@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
 use App\Models\BusinessType;
 use App\Models\Resident;
 use Illuminate\Http\Request;
@@ -14,7 +15,7 @@ class BusinessController extends Controller
      */
     public function index()
     {
-        $businesses = Business::with(['owner', 'type'])->get();
+        $businesses = Business::with(['owner', 'type', 'address'])->get();
         return view('businesses.index', compact('businesses'));
     }
 
@@ -25,8 +26,9 @@ class BusinessController extends Controller
     {
         $owners = Resident::all();
         $businesstypes = BusinessType::all();
+        $addresses = Address::all();
 
-        return view('businesses.create', compact('owners', 'businesstypes'));
+        return view('businesses.create', compact('owners', 'businesstypes', 'addresses'));
     }
 
     /**
@@ -37,18 +39,12 @@ class BusinessController extends Controller
         $validated = $request->validate([
             'owner_id' => 'required|exists:residents,id',
             'business_type_id' => 'required|exists:business_types,id',
-            'business_name' => 'required|string|max:255',
-            'house_number' => 'required|string|max:255',
-            'street_name' => 'required|string|max:255',
-            'village' => 'required|string|max:255',
-            'barangay' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
-            'province' => 'required|string|max:255',
-            'postal_code' => 'required|string|max:255',
+            'business_address_id' => 'required|exists:addresses,id',
+            'business_name' => 'required|string|max:255'
         ]);
 
         Business::create($validated);
-        return redirect()->route('businesses.index')->with('sucess', 'Business Added');
+        return redirect()->route('businesses.index')->with('success', 'Business Added');
     }
 
     /**
@@ -66,8 +62,9 @@ class BusinessController extends Controller
     {
         $owners = Resident::all();
         $businesstypes = BusinessType::all();
+        $addresses = Address::all();
 
-        return view('businesses.edit', compact('business', 'owners', 'businesstypes'));
+        return view('businesses.edit', compact('business', 'owners', 'businesstypes', 'addresses'));
     }
 
     /**
@@ -78,14 +75,8 @@ class BusinessController extends Controller
         $validated = $request->validate([
             'owner_id' => 'required|exists:residents,id',
             'business_type_id' => 'required|exists:business_types,id',
-            'business_name' => 'required|string|max:255',
-            'house_number' => 'required|string|max:255',
-            'street_name' => 'required|string|max:255',
-            'village' => 'required|string|max:255',
-            'barangay' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
-            'province' => 'required|string|max:255',
-            'postal_code' => 'required|string|max:255',
+            'business_address_id' => 'required|exists:addresses,id',
+            'business_name' => 'required|string|max:255'
         ]);
 
         $business->update($validated);

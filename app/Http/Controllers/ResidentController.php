@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Resident;
-use App\Models\Household;
+use App\Models\Address;
 use App\Models\FamilyRole;
-use App\Models\CurrentAddress;
 
 class ResidentController extends Controller
 {
@@ -24,11 +23,14 @@ class ResidentController extends Controller
      */
     public function create()
     {
-        $households = Household::all();
+        $addresses = Address::all();
         $familyroles = FamilyRole::all();
-        $currentaddress = CurrentAddress::all();
 
-        return view('residents.create', compact('households', 'familyroles', 'currentaddress'));
+        return view('residents.create', [
+            'households' => $addresses,
+            'currentaddress' => $addresses,
+            'familyroles' => $familyroles
+        ]);
     }
 
     /**
@@ -37,9 +39,9 @@ class ResidentController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'household_id' => 'required|exists:households,id',
+            'household_id' => 'required|exists:addresses,id',
             'family_role_id' => 'required|exists:family_roles,id',
-            'current_address_id' => 'required|exists:current_addresses,id',
+            'current_address_id' => 'required|exists:addresses,id',
             'first_name' => 'required|string|max:255',
             'middle_name' => 'nullable|string|max:255',
             'last_name' => 'required|string|max:255',
@@ -72,11 +74,15 @@ class ResidentController extends Controller
      */
     public function edit(Resident $resident)
     {
-        $households = Household::all();
+        $addresses = Address::all();
         $familyroles = FamilyRole::all();
-        $currentaddress = CurrentAddress::all();
 
-        return view('residents.edit', compact('resident', 'households', 'currentaddress', 'familyroles'));
+        return view('residents.edit', [
+            'resident' => $resident,               
+            'households' => $addresses,
+            'currentaddress' => $addresses,
+            'familyroles' => $familyroles,
+        ]);
     }
 
     /**
@@ -85,9 +91,9 @@ class ResidentController extends Controller
     public function update(Request $request, Resident $resident)
     {
         $validated = $request->validate([
-            'household_id' => 'required|exists:households,id',
+            'household_id' => 'required|exists:addresses,id',
             'family_role_id' => 'required|exists:family_roles,id',
-            'current_address_id' => 'required|exists:current_addresses,id',
+            'current_address_id' => 'required|exists:addresses,id',
             'first_name' => 'required|string|max:255',
             'middle_name' => 'nullable|string|max:255',
             'last_name' => 'required|string|max:255',

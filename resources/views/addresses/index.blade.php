@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1>Households</h1>
+    <h1>Addresses</h1>
 
     @if (session('success'))
         <div class="alert alert-success">
@@ -10,7 +10,7 @@
         </div>
     @endif
 
-    <a href="{{ route('households.create') }}" class="btn btn-primary mb-3">Add New Household</a>
+    <a href="{{ route('addresses.create') }}" class="btn btn-primary mb-3">Add New Address</a>
 
     <table class="table table-bordered">
         <thead>
@@ -27,20 +27,20 @@
             </tr>
         </thead>
         <tbody>
-            @forelse ($households as $household)
+            @forelse ($addresses as $address)
                 <tr>
-                    <td>{{ $household->purok }}</td>
-                    <td>{{ $household->house_number }}</td>
-                    <td>{{ $household->street_name }}</td>
-                    <td>{{ $household->village }}</td>
-                    <td>{{ $household->barangay }}</td>
-                    <td>{{ $household->city }}</td>
-                    <td>{{ $household->province }}</td>
-                    <td>{{ $household->postal_code }}</td>
+                    <td>{{ $address->purok }}</td>
+                    <td>{{ $address->house_number }}</td>
+                    <td>{{ $address->street_name }}</td>
+                    <td>{{ $address->village }}</td>
+                    <td>{{ $address->barangay }}</td>
+                    <td>{{ $address->city }}</td>
+                    <td>{{ $address->province }}</td>
+                    <td>{{ $address->postal_code }}</td>
                     <td>
-                        <a href="{{ route('households.show', $household->id) }}" class="btn btn-info btn-sm">View</a>
-                        <a href="{{ route('households.edit', $household->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                        <form action="{{ route('households.destroy', $household->id) }}" method="POST" style="display:inline;">
+                        <a href="{{ route('addresses.show', $address->id) }}" class="btn btn-info btn-sm">View</a>
+                        <a href="{{ route('addresses.edit', $address->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                        <form action="{{ route('addresses.destroy', $address->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <button onclick="return confirm('Are you sure?')" class="btn btn-danger btn-sm">Delete</button>
@@ -49,7 +49,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="9" class="text-center">No households found.</td>
+                    <td colspan="9" class="text-center">No addresses found.</td>
                 </tr>
             @endforelse
         </tbody>

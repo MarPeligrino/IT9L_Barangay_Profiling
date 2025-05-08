@@ -15,15 +15,9 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('owner_id')->constrained('residents');
+            $table->foreignId('business_address_id')->constrained('addresses');
             $table->foreignId('business_type_id')->constrained('business_types');
             $table->string('business_name');
-            $table->string('house_number');
-            $table->string('street_name');
-            $table->string('village');
-            $table->string('barangay');
-            $table->string('city');
-            $table->string('province');
-            $table->string('postal_code')->nullable();
 
             $table->timestamps();
         });

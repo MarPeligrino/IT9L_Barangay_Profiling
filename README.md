@@ -97,3 +97,15 @@ CHANGELOG
 @ 2200 - Will now continue with editing
 @ 2223 - Done with blades and creating blades and testing now moving on to CURRENTADDRESSCONTROLLER 
 @ 2238 - omfg I have to edit household table to generalized address table and somehow link it to residents and permit to normalize, I will commit this first to a seaprate branch just in case I want to go back
+
+05/08
+
+@ 0916 - Working now to change HOUSEHOLD to ADDRESSES
+@ 0931 - ALready edited HOUSEHOL and RESIDENT now moving on to model for ADDRESS and controller (deleted anything related to currentAdrress)
+@ 1001 - Creating not CONTROLLERS for ADDRESS
+@ 1016 - Still fixing things around for ADDRESS
+@ 1031 - Im still FUCKING FIXING THIS SHIT
+@ 1101 - I think I'm almost done fixing JUST cleaning up a few things like the residents getting an error when added
+@ 1116 - Fixed RESIDENT and ADDRESSES everything. I think it's just BUSINESS now that I need fixed
+@ 1131 - Almost done fixing BUSINESS, just testing blades now
+@ 1146 - Very much almost done with testing just a little bit more and can move on to next

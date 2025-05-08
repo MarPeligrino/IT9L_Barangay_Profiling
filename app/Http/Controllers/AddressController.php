@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
 use Illuminate\Http\Request;
-use App\Models\CurrentAddress;
 
-class CurrentAddressController extends Controller
+class AddressController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $currentAddresses = CurrentAddress::all();
-        return view('currentAddresses.index', compact('currentAddresses'));
+        $addresses = Address::all();
+        return view('addresses.index', compact('addresses'));
     }
 
     /**
@@ -21,7 +21,7 @@ class CurrentAddressController extends Controller
      */
     public function create()
     {
-        return view('currentAddresses.create');
+        return view('addresses.create');
     }
 
     /**
@@ -40,31 +40,31 @@ class CurrentAddressController extends Controller
             'postal_code' => 'required|string|max:255'
         ]);
 
-        CurrentAddress::create($validated);
+        Address::create($validated);
 
-        return redirect()->route('households.index')->with('success', 'Household added!');
+        return redirect()->route('addresses.index')->with('success', 'Address added!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(CurrentAddress $household)
+    public function show(Address $address)
     {
-        return view('households.show', compact('household'));
+        return view('addresses.show', compact('address'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(CurrentAddress $household)
+    public function edit(Address $address)
     {
-        return view('households.edit', compact('household'));
+        return view('addresses.edit', compact('address'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, CurrentAddress $household)
+    public function update(Request $request, Address $address)
     {
         $validated = $request->validate([
             'purok' => 'required|string|max:255',
@@ -77,9 +77,9 @@ class CurrentAddressController extends Controller
             'postal_code' => 'required|string|max:255'
         ]);
 
-        $household->update($validated);
+        $address->update($validated);
 
-        return redirect()->route('households.index')->with('success', "Household updated successfully.");
+        return redirect()->route('addresses.index')->with('success', "Address updated successfully.");
 
 
     }
@@ -87,10 +87,10 @@ class CurrentAddressController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CurrentAddress $household)
+    public function destroy(Address $address)
     {
-        $household->delete();
+        $address->delete();
 
-        return redirect()->route('households.index')->with('success', "Household deleted successfully.");
+        return redirect()->route('addresses.index')->with('success', "Address deleted successfully.");
     }
 }
