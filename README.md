@@ -109,3 +109,6 @@ CHANGELOG
 @ 1116 - Fixed RESIDENT and ADDRESSES everything. I think it's just BUSINESS now that I need fixed
 @ 1131 - Almost done fixing BUSINESS, just testing blades now
 @ 1146 - Very much almost done with testing just a little bit more and can move on to next
+@ 1216 - DONE with BUSINESS everything and BUSINESSTYPES everything, trying to TEST now
+@ 1246 - Doing the BUSINESS TRANSACTIONS TABLE
+@ 1258 - Finished CONTROLLER havent tested yet need to create BLADES then ROUTE then TEST. Will commit changes now and continue later.

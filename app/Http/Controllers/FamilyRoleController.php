@@ -36,7 +36,7 @@ class FamilyRoleController extends Controller
         ]);
 
         FamilyRole::create($validated);
-        return redirect()->route('familyroles.index')->with('sucess', 'FamilyRole Added');
+        return redirect()->route('familyroles.index')->with('success', 'FamilyRole Added');
     }
 
     /**

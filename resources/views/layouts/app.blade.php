@@ -36,6 +36,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('businesses.index') }}">Business</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('businessTypes.index') }}">BusinessType</a>
+                    </li>
                     
                     <!-- Add more nav links here if needed -->
                 </ul>

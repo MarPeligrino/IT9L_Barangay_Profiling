@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class PermitTransaction extends Model
 {
     protected $fillable = [
-        'PermitID',
-        'AmountPaid',
-        'PaymentDate',
-        'PaymentStatus',
+        'business_permit_id',
+        'amount_paid',
+        'payment_date',
+        'payment_status'
     ];
 
     public function businessPermit()

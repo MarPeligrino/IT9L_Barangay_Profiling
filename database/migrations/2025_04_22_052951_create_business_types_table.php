@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('description')->nullable();
 
+// CONSTRAIN HERE MADELETE NI SYA MAG ERROR
+
+
             $table->timestamps();
         });
     }
