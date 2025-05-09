@@ -96,4 +96,5 @@ CHANGELOG
 @ 1350 - Still needs testing and edit seeders for familyroles so I can add head and then need data for businessType as well. Will now commit and push changes
 @ 2200 - Will now continue with editing
 @ 2223 - Done with blades and creating blades and testing now moving on to CURRENTADDRESSCONTROLLER 
-@ 2238 - omfg I have to edit household table to generalized address table and somehow link it to residents and permit to normalize, I will commit this first to a seaprate branch just in case I want to go back
+@ 2238 - omfg I have to edit household table to generalized address table and somehow link it to residents and permit to normalize, I will commit this first to a seaprate branch just in case I want to go back branch: change-address-to-generalize.
+@ 2253 - Backed up by creating another zip file. Will continue to make the changes later.
