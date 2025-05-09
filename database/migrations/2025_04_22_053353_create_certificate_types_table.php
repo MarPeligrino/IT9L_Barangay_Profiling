@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('clearance_types', function (Blueprint $table) {
+        Schema::create('certificate_types', function (Blueprint $table) {
             $table->id();
 
-            $table->string('clearance_name');
+            $table->string('certificate_name');
             $table->string('description')->nullable();
             $table->integer('validity'); // in days/months?
             $table->decimal('fee', 8, 2);
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('clearance__types');
+        Schema::dropIfExists('certificate_types');
     }
 };

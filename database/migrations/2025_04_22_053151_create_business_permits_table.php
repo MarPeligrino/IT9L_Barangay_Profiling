@@ -19,7 +19,6 @@ return new class extends Migration
             $table->date('issued_date');
             $table->date('expiry_date');
             $table->string('status');
-            $table->decimal('fee', 10, 2);
 
             $table->timestamps();
         });

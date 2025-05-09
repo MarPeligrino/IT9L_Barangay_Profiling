@@ -11,4 +11,14 @@ class IncidentReportParty extends Model
         'ResidentID',
         'Role',
     ];
+
+    public function resident()
+    {
+        return $this->belongsTo(Resident::class);
+    }
+
+    public function incidentReport()
+    {
+        return $this->belongsTo(IncidentReport::class);
+    }
 }

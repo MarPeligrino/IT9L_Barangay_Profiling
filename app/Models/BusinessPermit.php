@@ -13,7 +13,7 @@ class BusinessPermit extends Model
         return $this->belongsTo(Business::class);
     }
 
-    public function issuedBy() {
+    public function barangayEmployee() {
         return $this->belongsTo(BarangayEmployee::class, 'barangay_employee_id');
     }
 }

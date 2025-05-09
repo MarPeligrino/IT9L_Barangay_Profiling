@@ -16,7 +16,7 @@ return new class extends Migration
 
             $table->foreignId('resident_id')->constrained();
             $table->foreignId('barangay_employee_id')->constrained();
-            $table->foreignId('clearance_type_id')->constrained();
+            $table->foreignId('certificate_type_id')->constrained();
             $table->text('purpose');
             $table->date('issued_date');
             $table->string('status');
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('barangay__clearances');
+        Schema::dropIfExists('barangay_certificates');
     }
 };

@@ -110,5 +110,13 @@ CHANGELOG
 @ 1131 - Almost done fixing BUSINESS, just testing blades now
 @ 1146 - Very much almost done with testing just a little bit more and can move on to next
 @ 1216 - DONE with BUSINESS everything and BUSINESSTYPES everything, trying to TEST now
-@ 1246 - Doing the BUSINESS TRANSACTIONS TABLE
+@ 1246 - Doing the PERMIT TRANSACTIONS TABLE
 @ 1258 - Finished CONTROLLER havent tested yet need to create BLADES then ROUTE then TEST. Will commit changes now and continue later.
+
+05/09
+
+@ 1118 - FOCUS ON CONTROLLERS EVERYTHING TESTING LATER USING CHATGPT
+@ 1151 - Raw dogging the controller now on INCIDENT PARTY CONTROLLER
+@ 1158 - Done INCIDENT PARTY CONTROLLER 
+@ 1226 - Done WITH COMPLAINT AND COMPLAINT PARTY Now creating CERT TYPES fixing models first
+@ 1252 - Finished ALL CONTROLLERS havent tested anything yet WILL HAVE TO USE main, will commit now and push changes on separate branch
