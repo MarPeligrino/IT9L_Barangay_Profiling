@@ -13,7 +13,7 @@ class AddressController extends Controller
     public function index()
     {
         $addresses = Address::all();
-        return view('addresses.index', compact('addresses'));
+        return view('address.index', compact('addresses'));
     }
 
     /**
@@ -42,7 +42,7 @@ class AddressController extends Controller
 
         Address::create($validated);
 
-        return redirect()->route('addresses.index')->with('success', 'Address added!');
+        return redirect()->route('address.index')->with('success', 'Address added!');
     }
 
     /**
@@ -79,7 +79,7 @@ class AddressController extends Controller
 
         $address->update($validated);
 
-        return redirect()->route('addresses.index')->with('success', "Address updated successfully.");
+        return redirect()->route('address.index')->with('success', "Address updated successfully.");
 
 
     }
@@ -91,6 +91,6 @@ class AddressController extends Controller
     {
         $address->delete();
 
-        return redirect()->route('addresses.index')->with('success', "Address deleted successfully.");
+        return redirect()->route('address.index')->with('success', "Address deleted successfully.");
     }
 }
