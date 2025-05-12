@@ -23,6 +23,9 @@ class Resident extends Model
         'religion'
     ];
 
+    public const CIVIL_STATUSES = ['Single', 'Married', 'Divorced', 'Widowed', 'Separated'];
+
+
     public function household()
     {
         return $this->belongsTo(Address::class, 'household_id');

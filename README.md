@@ -120,3 +120,7 @@ CHANGELOG
 @ 1158 - Done INCIDENT PARTY CONTROLLER 
 @ 1226 - Done WITH COMPLAINT AND COMPLAINT PARTY Now creating CERT TYPES fixing models first
 @ 1252 - Finished ALL CONTROLLERS havent tested anything yet WILL HAVE TO USE main, will commit now and push changes on separate branch
+
+//THINGS TO EDIT 
+- Notification bar which updates along with recent activity
+- Add charts for residents (age, sex) distribution

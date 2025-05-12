@@ -28,4 +28,19 @@ class Address extends Model
     public function business() {
         return $this->hasMany(Business::class, 'business_address_id');
     }
+
+    public function getFormattedAttribute()
+    {
+        return collect([
+            $this->house_number,
+            $this->street_name,
+            $this->village,
+            $this->purok ? 'Purok ' . $this->purok : null,
+            $this->barangay,
+            $this->city,
+            $this->province,
+            $this->postal_code
+        ])->filter()->implode(', ');
+    }
+
 }
