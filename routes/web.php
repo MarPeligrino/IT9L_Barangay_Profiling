@@ -11,8 +11,9 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    return view('residents.index', ['residents' => []]);    
-});
+    return view('dashboard');
+})->name('dashboard');
+
 
 //RESIDENTS WITH RESOURCE
 Route::resource('residents', ResidentController::class);

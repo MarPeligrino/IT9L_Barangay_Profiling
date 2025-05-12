@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Barangay Profiling System</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"> <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
     <style>
         body {
             overflow-x: hidden;
         }
 
-                /* Styled toggle to blend with navbar */
+        /* Sidebar toggle styling */
         #sidebarToggle {
             background-color: #0d6efd;
             color: white;
@@ -21,11 +21,9 @@
             transition: transform 0.3s ease;
         }
 
-        /* Rotates when active */
         #sidebarToggle.rotated {
             transform: rotate(90deg);
         }
-
 
         .sidebar {
             height: 100vh;
@@ -34,7 +32,7 @@
             width: 220px;
             transition: all 0.3s ease;
             position: fixed;
-            top: 56px; /* Adjusted for top navbar height */
+            top: 56px;
             left: 0;
             z-index: 1000;
         }
@@ -47,10 +45,15 @@
             background-color: #0b5ed7;
         }
 
+        .sidebar .nav-link.active {
+            background-color: #084cd9;
+            font-weight: bold;
+        }
+
         .main-content {
             margin-left: 220px;
             padding: 20px;
-            margin-top: 56px; /* Adjusted for top navbar height */
+            margin-top: 56px;
             transition: all 0.3s ease;
         }
 
@@ -71,8 +74,8 @@
 
     <!-- Top Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary px-3 fixed-top">
-        <button class="btn btn-light me-2" id="sidebarToggle">☰</button>
-        <a class="navbar-brand mb-0 h1" href="#">Barangay Profiling</a>
+        <button class="btn me-2" id="sidebarToggle">☰</button>
+        <a class="navbar-brand mb-0 h1" href="{{ route('dashboard') }}">Barangay Profiling</a>
 
         <div class="ms-auto d-flex align-items-center">
             <span class="text-white me-3">Welcome User</span>
@@ -93,13 +96,14 @@
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <nav class="nav flex-column">
-            <a class="nav-link" href="{{ route('residents.index') }}">Residents</a>
-            <a class="nav-link" href="{{ route('addresses.index') }}">Addresses</a>
-            <a class="nav-link" href="{{ route('familyroles.index') }}">FamilyRoles</a>
-            <a class="nav-link" href="{{ route('barangaypositions.index') }}">BarangayPosition</a>
-            <a class="nav-link" href="{{ route('barangayemployees.index') }}">BarangayEmployee</a>
-            <a class="nav-link" href="{{ route('businesses.index') }}">Business</a>
-            <a class="nav-link" href="{{ route('businessTypes.index') }}">BusinessType</a>
+            <a class="nav-link {{ Request::is('/') || Request::is('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">Home</a>
+            <a class="nav-link {{ Request::is('residents*') ? 'active' : '' }}" href="{{ route('residents.index') }}">Residents</a>
+            <a class="nav-link {{ Request::is('addresses*') ? 'active' : '' }}" href="{{ route('addresses.index') }}">Addresses</a>
+            <a class="nav-link {{ Request::is('familyroles*') ? 'active' : '' }}" href="{{ route('familyroles.index') }}">FamilyRoles</a>
+            <a class="nav-link {{ Request::is('barangaypositions*') ? 'active' : '' }}" href="{{ route('barangaypositions.index') }}">BarangayPosition</a>
+            <a class="nav-link {{ Request::is('barangayemployees*') ? 'active' : '' }}" href="{{ route('barangayemployees.index') }}">BarangayEmployee</a>
+            <a class="nav-link {{ Request::is('businesses*') ? 'active' : '' }}" href="{{ route('businesses.index') }}">Business</a>
+            <a class="nav-link {{ Request::is('businessTypes*') ? 'active' : '' }}" href="{{ route('businessTypes.index') }}">BusinessType</a>
         </nav>
     </div>
 
