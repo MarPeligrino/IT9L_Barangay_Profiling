@@ -7,13 +7,8 @@ use App\Http\Controllers\BusinessTypeController;
 use App\Http\Controllers\FamilyRoleController;
 use App\Http\Controllers\ResidentController;
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
-
-
-Route::get('/', function () {
-    return view('dashboard');
-})->name('dashboard');
-
 
 //RESIDENTS WITH RESOURCE
 Route::resource('residents', ResidentController::class);
@@ -35,3 +30,7 @@ Route::resource('businesses', BusinessController::class);
 
 //BUSINESSTYPE WITH RESOURCE
 Route::resource('businessTypes', BusinessTypeController::class);
+
+// DASHBOARD
+Route::get('/', [DashboardController::class, 'index']);
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
