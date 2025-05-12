@@ -14,19 +14,21 @@
     }
 
     .breadcrumb a {
-    text-decoration: none;
-    
+        text-decoration: none;
     }
+
     .breadcrumb a:hover {
         text-decoration: underline;
     }
-
 </style>
 
 <div class="container-fluid">
-    <div class="mb-4">
-        <h2>Welcome, User!</h2>
-        <p class="text-muted">Today is {{ \Carbon\Carbon::now()->format('l, F j, Y') }}</p>
+    <!-- Welcome -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2>Welcome, User!</h2>
+            <p class="text-muted">Today is {{ \Carbon\Carbon::now()->format('l, F j, Y') }}</p>
+        </div>
     </div>
 
     <div class="row g-3">
@@ -104,13 +106,21 @@
     </div>
 
     <!-- Recent Activity -->
-    <div class="mt-5">
+    <div class="mt-5" id="recentActivity">
         <h4>Recent Activity</h4>
-        <ul class="list-group">
-            <li class="list-group-item">John Doe was added as a resident on May 10, 2025</li>
-            <li class="list-group-item">New business registered: Sari-Sari Store</li>
-            <li class="list-group-item">Address record updated for Purok 5, Zone 2</li>
-        </ul>
+        @if($recentActivities->isEmpty())
+            <p class="text-muted">No recent activity found.</p>
+        @else
+            <ul class="list-group">
+                @foreach($recentActivities as $activity)
+                    <li class="list-group-item">
+                        {{ $activity->description }}
+                        <br>
+                        <small class="text-muted">{{ $activity->created_at->diffForHumans() }}</small>
+                    </li>
+                @endforeach
+            </ul>
+        @endif
     </div>
 </div>
 @endsection

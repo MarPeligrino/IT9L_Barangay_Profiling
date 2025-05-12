@@ -124,3 +124,7 @@ CHANGELOG
 //THINGS TO EDIT 
 - Notification bar which updates along with recent activity
 - Add charts for residents (age, sex) distribution
+
+05/12
+
+@ 1656 - Will now continue to work on completing the UI
