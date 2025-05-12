@@ -5,11 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Barangay Profiling System</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"> <!-- Bootstrap Icons -->
 
     <style>
         body {
             overflow-x: hidden;
         }
+
+                /* Styled toggle to blend with navbar */
+        #sidebarToggle {
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            font-size: 1.25rem;
+            transition: transform 0.3s ease;
+        }
+
+        /* Rotates when active */
+        #sidebarToggle.rotated {
+            transform: rotate(90deg);
+        }
+
 
         .sidebar {
             height: 100vh;
@@ -18,7 +34,7 @@
             width: 220px;
             transition: all 0.3s ease;
             position: fixed;
-            top: 0;
+            top: 56px; /* Adjusted for top navbar height */
             left: 0;
             z-index: 1000;
         }
@@ -34,36 +50,48 @@
         .main-content {
             margin-left: 220px;
             padding: 20px;
+            margin-top: 56px; /* Adjusted for top navbar height */
             transition: all 0.3s ease;
         }
 
         .collapsed-sidebar {
             width: 0 !important;
             padding: 0 !important;
+            overflow: hidden;
+            pointer-events: none;
+            opacity: 0;
         }
 
         .collapsed-content {
             margin-left: 0 !important;
         }
-
-        .toggle-btn {
-            position: fixed;
-            top: 15px;
-            left: 230px;
-            z-index: 1051;
-            transition: left 0.3s ease;
-        }
-
-        .collapsed-sidebar ~ .toggle-btn {
-            left: 10px !important;
-        }
     </style>
 </head>
 <body>
 
+    <!-- Top Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary px-3 fixed-top">
+        <button class="btn btn-light me-2" id="sidebarToggle">☰</button>
+        <a class="navbar-brand mb-0 h1" href="#">Barangay Profiling</a>
+
+        <div class="ms-auto d-flex align-items-center">
+            <span class="text-white me-3">Welcome User</span>
+            <div class="dropdown">
+                <a href="#" class="text-white dropdown-toggle" id="settingsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-gear-fill fs-5"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="settingsDropdown">
+                    <li><a class="dropdown-item" href="#">Open Profile</a></li>
+                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
-        <h4 class="text-white text-center mb-4">Barangay Profiling</h4>
         <nav class="nav flex-column">
             <a class="nav-link" href="{{ route('residents.index') }}">Residents</a>
             <a class="nav-link" href="{{ route('addresses.index') }}">Addresses</a>
@@ -74,9 +102,6 @@
             <a class="nav-link" href="{{ route('businessTypes.index') }}">BusinessType</a>
         </nav>
     </div>
-
-    <!-- Toggle Button -->
-    <button class="btn btn-light toggle-btn" id="sidebarToggle">☰</button>
 
     <!-- Main Content -->
     <div class="main-content" id="mainContent">
@@ -92,12 +117,7 @@
         toggleBtn.addEventListener('click', () => {
             sidebar.classList.toggle('collapsed-sidebar');
             mainContent.classList.toggle('collapsed-content');
-
-            if (sidebar.classList.contains('collapsed-sidebar')) {
-                toggleBtn.style.left = '10px';
-            } else {
-                toggleBtn.style.left = '230px';
-            }
+            toggleBtn.classList.toggle('rotated');
         });
     </script>
 
