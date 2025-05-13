@@ -13,11 +13,33 @@ class BusinessController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $businesses = Business::with(['owner', 'type', 'address'])->get();
-        return view('businesses.index', compact('businesses'));
+        $query = Business::with(['owner', 'type', 'address']);
+
+        if ($search = $request->input('search')) {
+            $query->where(function ($q) use ($search) {
+                $q->where('business_name', 'like', "%{$search}%");
+            });
+        }
+
+        if ($type = $request->input('type')) {
+            $query->where('business_type_id', $type);
+        }
+
+        $sortableFields = ['business_name', 'created_at', 'updated_at'];
+        $sortBy = in_array($request->input('sort_by'), $sortableFields) ? $request->input('sort_by') : 'created_at';
+        $order = $request->input('order') === 'asc' ? 'asc' : 'desc';
+
+        $businesses = $query->orderBy($sortBy, $order)
+                            ->paginate(10)
+                            ->appends($request->except('page'));
+
+        $businesstypes = BusinessType::all();
+
+        return view('businesses.index', compact('businesses', 'businesstypes'));
     }
+
 
     /**
      * Show the form for creating a new resource.
