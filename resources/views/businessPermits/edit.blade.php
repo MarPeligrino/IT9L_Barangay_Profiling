@@ -75,6 +75,29 @@
                     <option value="Revoked" {{ $businessPermit->status == 'Revoked' ? 'selected' : '' }}>Revoked</option>
                 </select>
             </div>
+
+            <!-- Transaction Details -->
+            <hr class="mt-4">
+
+            <div class="col-md-4">
+                <label class="form-label">Amount Paid <span class="text-danger">*</span></label>
+                <input type="number" step="0.01" name="amount_paid" class="form-control" value="{{ $transaction->amount_paid ?? '' }}" required>
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label">Payment Date <span class="text-danger">*</span></label>
+                <input type="date" name="payment_date" class="form-control" value="{{ $transaction->payment_date ?? now()->toDateString() }}" required>
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label">Payment Status <span class="text-danger">*</span></label>
+                <select name="payment_status" class="form-select" required>
+                    <option value="Paid" {{ $transaction->payment_status == 'Paid' ? 'selected' : '' }}>Paid</option>
+                    <option value="Pending" {{ $transaction->payment_status == 'Pending' ? 'selected' : '' }}>Pending</option>
+                    <option value="Failed" {{ $transaction->payment_status == 'Failed' ? 'selected' : '' }}>Failed</option>
+                </select>
+            </div>
+
         </div>
 
         <div class="text-end mt-4">

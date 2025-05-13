@@ -59,8 +59,8 @@
 
             <!-- Expiry Date -->
             <div class="col-md-6">
-                <label class="form-label">Expiry Date <span class="text-danger">*</span></label>
-                <input type="date" name="expiry_date" class="form-control" required>
+                <label class="form-label">Expiry Date</label>
+                <input type="date" name="expiry_date" id="expiry_date" class="form-control" readonly>
             </div>
 
             <!-- Status -->
@@ -106,4 +106,31 @@
         </div>
     </form>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const issuedDateInput = document.querySelector('input[name="issued_date"]');
+        const expiryDateInput = document.querySelector('input[name="expiry_date"]');
+
+        function updateExpiryDate() {
+            const issuedDate = issuedDateInput.value;
+            if (!issuedDate) return;
+
+            const issued = new Date(issuedDate);
+            issued.setFullYear(issued.getFullYear() + 1);
+            issued.setDate(issued.getDate() - 1);
+
+            const yyyy = issued.getFullYear();
+            const mm = String(issued.getMonth() + 1).padStart(2, '0');
+            const dd = String(issued.getDate()).padStart(2, '0');
+
+            expiryDateInput.value = `${yyyy}-${mm}-${dd}`;
+        }
+
+        issuedDateInput.addEventListener('change', updateExpiryDate);
+        updateExpiryDate(); // run once on load
+    });
+</script>
+
+
 @endsection

@@ -16,4 +16,10 @@ class BusinessPermit extends Model
     public function barangayEmployee() {
         return $this->belongsTo(BarangayEmployee::class, 'barangay_employee_id');
     }
+
+    public function permitTransaction()
+    {
+        return $this->hasOne(\App\Models\PermitTransaction::class);
+    }
+
 }
