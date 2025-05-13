@@ -2,23 +2,41 @@
 
 @section('content')
 <div class="container">
-    <h1>Edit BusinessType</h1>
+    <h2 class="mb-4"><i class="bi bi-pencil-square me-2"></i>Edit Business Type</h2>
 
-    <form action="{{ route('businessTypes.update', $businessType->id) }}" method="POST">
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <strong>Whoops!</strong> Please fix the following issues:
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <form action="{{ route('businessTypes.update', $businessType->id) }}" method="POST" class="card shadow-sm p-4">
         @csrf
         @method('PUT')
 
-        <div class="form-group mb-3">
-            <label>Name</label>
-            <input type="text" name="name" class="form-control" value="{{ $businessType->name }}" required>
-        </div>
-        
-        <div class="form-group mb-3">
-            <label>Description</label>
-            <input type="text" name="description" class="form-control" value="{{ $businessType->description }}" required>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label class="form-label">Name <span class="text-danger">*</span></label>
+                <input type="text" name="name" class="form-control" value="{{ $businessType->name }}" required>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Description <span class="text-danger">*</span></label>
+                <input type="text" name="description" class="form-control" value="{{ $businessType->description }}" required>
+            </div>
         </div>
 
-        <button type="submit" class="btn btn-success mt-3">Update BusinessType</button>
+        <div class="text-end mt-4">
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-save me-1"></i> Update Type
+            </button>
+            <a href="{{ route('businessTypes.index') }}" class="btn btn-secondary ms-2">Cancel</a>
+        </div>
     </form>
 </div>
 @endsection

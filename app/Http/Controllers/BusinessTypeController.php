@@ -7,28 +7,31 @@ use Illuminate\Http\Request;
 
 class BusinessTypeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        $businessTypes = BusinessType::all();
+        $query = BusinessType::query();
+
+        if ($search = $request->input('search')) {
+            $query->where('name', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+        }
+
+        $sortableFields = ['name', 'description', 'created_at', 'updated_at'];
+        $sortBy = in_array($request->input('sort_by'), $sortableFields) ? $request->input('sort_by') : 'created_at';
+        $order = $request->input('order') === 'asc' ? 'asc' : 'desc';
+
+        $businessTypes = $query->orderBy($sortBy, $order)
+                               ->paginate(10)
+                               ->appends($request->except('page'));
 
         return view('businessTypes.index', compact('businessTypes'));
-    
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('businessTypes.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -36,49 +39,46 @@ class BusinessTypeController extends Controller
             'description' => 'required|string|max:255'
         ]);
 
-        BusinessType::create($validated);
-        return redirect()->route('businessTypes.index')->with('success', 'BusinessType Added');
-    
+        $type = BusinessType::create($validated);
+
+        // 🔔 Log activity
+        log_activity("BusinessType created: {$type->name}");
+
+        return redirect()->route('businessTypes.index')->with('success', 'Business Type added!');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(BusinessType $businessType)
     {
         return view('businessTypes.show', compact('businessType'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(BusinessType $businessType)
     {
         return view('businessTypes.edit', compact('businessType'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, BusinessType $businessType)
     {
         $validated = $request->validate([
-            'role' => 'required|string|max:255',
-            'relationship' => 'required|string|max:255'
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255'
         ]);
 
         $businessType->update($validated);
 
-        return redirect()->route('businessTypes.index')->with('success', "BusinessType updated successfully.");
+        // 🔔 Log activity
+        log_activity("BusinessType updated: {$businessType->name}");
+
+        return redirect()->route('businessTypes.index')->with('success', "Business Type updated successfully.");
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(BusinessType $businessType)
     {
+        // 🔔 Log activity
+        log_activity("BusinessType deleted: {$businessType->name}");
+
         $businessType->delete();
 
-        return redirect()->route('businessTypes.index')->with('success', "BusinessType deleted successfully.");
+        return redirect()->route('businessTypes.index')->with('success', "Business Type deleted successfully.");
     }
 }
