@@ -7,7 +7,6 @@ use App\Models\Resident;
 use App\Models\Address;
 use App\Models\BarangayEmployee;
 use App\Models\Business;
-use App\Models\RecentActivity;
 
 class DashboardController extends Controller
 {
@@ -18,9 +17,7 @@ class DashboardController extends Controller
             'addressCount' => Address::count(),
             'employeeCount' => BarangayEmployee::count(),
             'businessCount' => Business::count(),
-            'recentActivities' => RecentActivity::latest()->take(5)->get(),
         ]);
     }
-
 
 }

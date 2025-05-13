@@ -11,11 +11,46 @@ class BarangayEmployeeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $barangayemployees = BarangayEmployee::all();
-        return view('barangayemployees.index', compact('barangayemployees'));
+        $query = BarangayEmployee::query();
+
+        // Search
+        if ($search = $request->input('search')) {
+            $query->where(function ($q) use ($search) {
+                $q->where('first_name', 'like', "%{$search}%")
+                ->orWhere('last_name', 'like', "%{$search}%")
+                ->orWhereHas('position', function ($subQuery) use ($search) {
+                    $subQuery->where('position_name', 'like', "%{$search}%");
+                });
+            });
+        }
+
+        // Filter by Position
+        if ($request->filled('position_id')) {
+            $query->where('position_id', $request->position_id);
+        }
+
+        // Sort
+        $sortableFields = ['first_name', 'last_name', 'start_date', 'created_at', 'updated_at'];
+        $sortBy = in_array($request->input('sort_by'), $sortableFields)
+            ? $request->input('sort_by')
+            : 'created_at';
+
+        $order = $request->input('order') === 'asc' ? 'asc' : 'desc';
+
+        // Paginate
+        $employees = $query->orderBy($sortBy, $order)
+                        ->paginate(10)
+                        ->appends($request->except('page'));
+
+        // Get all positions for the filter dropdown
+        $barangayPositions = BarangayPosition::all();
+
+        return view('barangayemployees.index', compact('employees', 'barangayPositions'));
     }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -35,13 +70,14 @@ class BarangayEmployeeController extends Controller
         $validated = $request->validate([
             'position_id' => 'required|exists:barangay_positions,id',
             'first_name' => 'required|string|max:255',
-            'middle_name' => 'required|string|max:255',
+            'middle_name' => 'nullable|string|max:255',
             'last_name' => 'required|string|max:255',
-            'contact_number' => 'required|string|max:255'
+            'contact_number' => 'nullable|string|max:255',
+            'start_date' => 'required|date'
         ]);
 
         BarangayEmployee::create($validated);
-        return redirect()->route('barangayemployees.index')->with('sucess', 'BarangayEmployee Added');
+        return redirect()->route('barangayemployees.index')->with('success', 'Barangay Employee Added');
     }
 
     /**
@@ -70,14 +106,15 @@ class BarangayEmployeeController extends Controller
         $validated = $request->validate([
             'position_id' => 'required|exists:barangay_positions,id',
             'first_name' => 'required|string|max:255',
-            'middle_name' => 'required|string|max:255',
+            'middle_name' => 'nullable|string|max:255',
             'last_name' => 'nullable|string|max:255',
-            'contact_number' => 'required|string|max:255',
+            'contact_number' => 'nullable|string|max:255',
+            'start_date' => 'required|date'
         ]);
 
         $barangayemployee->update($validated);
 
-        return redirect()->route('barangayemployees.index')->with('success', "BarangayEmployee updated successfully.");
+        return redirect()->route('barangayemployees.index')->with('success', "Barangay Employee updated successfully.");
 
 
     }
@@ -89,6 +126,6 @@ class BarangayEmployeeController extends Controller
     {
         $barangayemployee->delete();
 
-        return redirect()->route('barangayemployees.index')->with('success', 'BarangayEmployee deleted successfully.');
+        return redirect()->route('barangayemployees.index')->with('success', 'Barangay Employee deleted successfully.');
     }
 }

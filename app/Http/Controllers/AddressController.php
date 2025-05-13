@@ -10,11 +10,49 @@ class AddressController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $addresses = Address::all();
-        return view('addresses.index', compact('addresses'));
+        $query = Address::query();
+
+        if ($search = $request->input('search')) {
+            $query->where(function ($q) use ($search) {
+                $q->where('street_name', 'like', "%{$search}%")
+                ->orWhere('barangay', 'like', "%{$search}%")
+                ->orWhere('city', 'like', "%{$search}%")
+                ->orWhere('province', 'like', "%{$search}%")
+                ->orWhere('postal_code', 'like', "%{$search}%");
+            });
+        }
+
+        if ($barangay = $request->input('barangay')) {
+            $query->where('barangay', $barangay);
+        }
+
+        if ($city = $request->input('city')) {
+            $query->where('city', $city);
+        }
+
+        if ($province = $request->input('province')) {
+            $query->where('province', $province);
+        }
+
+        $sortableFields = ['house_number', 'street_name', 'purok', 'barangay', 'city', 'province', 'postal_code', 'created_at', 'updated_at'];
+        $sortBy = in_array($request->input('sort_by'), $sortableFields) ? $request->input('sort_by') : 'created_at';
+        $order = $request->input('order') === 'asc' ? 'asc' : 'desc';
+
+        $addresses = $query->orderBy($sortBy, $order)
+                        ->paginate(10)
+                        ->appends($request->except('page'));
+
+        // Get unique values for dropdowns
+        $allBarangays = Address::select('barangay')->distinct()->pluck('barangay');
+        $allCities = Address::select('city')->distinct()->pluck('city');
+        $allProvinces = Address::select('province')->distinct()->pluck('province');
+
+        return view('addresses.index', compact('addresses', 'allBarangays', 'allCities', 'allProvinces'));
     }
+
+
 
     /**
      * Show the form for creating a new resource.

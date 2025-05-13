@@ -68,7 +68,6 @@ class ResidentController extends Controller
 
         $resident = Resident::create($validated);
 
-        // 🔔 Log activity
         log_activity("New resident added: {$resident->first_name} {$resident->last_name}");
 
         return redirect()->route('residents.index')->with('success', 'Resident added!');
@@ -113,7 +112,6 @@ class ResidentController extends Controller
 
         $resident->update($validated);
 
-        // 🔔 Log activity
         log_activity("Resident updated: {$resident->first_name} {$resident->last_name}");
 
         return redirect()->route('residents.index')->with('success', 'Resident updated successfully.');
@@ -121,7 +119,6 @@ class ResidentController extends Controller
 
     public function destroy(Resident $resident)
     {
-        // 🔔 Log activity before deleting
         log_activity("Resident deleted: {$resident->first_name} {$resident->last_name}");
 
         $resident->delete();

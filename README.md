@@ -128,3 +128,8 @@ CHANGELOG
 05/12
 
 @ 1656 - Will now continue to work on completing the UI
+
+//Things to EDIT
+
+- Will need to change address search bar add address button
+- Will need to move address address from residents index to the left so modified and created on the right

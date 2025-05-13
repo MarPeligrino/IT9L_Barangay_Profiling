@@ -87,9 +87,10 @@
                         <th>{!! sortLink('sex', 'Sex', $currentSort, $currentOrder) !!}</th>
                         <th>{!! sortLink('age', 'Age', $currentSort, $currentOrder) !!}</th>
                         <th>{!! sortLink('birthday', 'Birthday', $currentSort, $currentOrder) !!}</th>
+                        <th>Address</th>
                         <th>{!! sortLink('created_at', 'Created At', $currentSort, $currentOrder) !!}</th>
                         <th>{!! sortLink('updated_at', 'Modified At', $currentSort, $currentOrder) !!}</th>
-                        <th>Address</th>
+                        
                         <th class="text-center">Actions</th>
                     </tr>
                 </thead>
@@ -105,13 +106,13 @@
                             </td>
                             <td>{{ $resident->age }}</td>
                             <td>{{ \Carbon\Carbon::parse($resident->birthday)->format('M d, Y') }}</td>
-                            <td>{{ $resident->created_at->format('M d, Y h:i A') }}</td>
-                            <td>{{ $resident->updated_at->format('M d, Y h:i A') }}</td>
                             <td>
                                 {{ optional($resident->household)->house_number }},
                                 {{ optional($resident->household)->street_name }},
                                 {{ optional($resident->household)->barangay }}
                             </td>
+                            <td>{{ $resident->created_at->format('M d, Y h:i A') }}</td>
+                            <td>{{ $resident->updated_at->format('M d, Y h:i A') }}</td>
                             <td class="text-center">
                                 <a href="{{ route('residents.show', $resident->id) }}" class="btn btn-sm btn-info">
                                     <i class="bi bi-eye"></i>

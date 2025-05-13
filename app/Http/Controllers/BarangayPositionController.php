@@ -10,11 +10,31 @@ class BarangayPositionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $barangaypositions = BarangayPosition::all();
+        $query = BarangayPosition::query();
+
+        // Search by name or description
+        if ($search = $request->input('search')) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+        // Sortable fields
+        $sortableFields = ['name', 'description', 'created_at'];
+        $sortBy = in_array($request->input('sort_by'), $sortableFields) ? $request->input('sort_by') : 'created_at';
+        $order = $request->input('order') === 'asc' ? 'asc' : 'desc';
+
+        // Pagination with query string persistence
+        $barangaypositions = $query->orderBy($sortBy, $order)
+                        ->paginate(10)
+                        ->appends($request->except('page'));
+
         return view('barangaypositions.index', compact('barangaypositions'));
     }
+
 
     /**
      * Show the form for creating a new resource.

@@ -2,53 +2,66 @@
 
 @section('content')
 <div class="container">
-    <h1>Edit Address</h1>
+    <h2 class="mb-4"><i class="bi bi-pencil-square me-2"></i>Edit Address</h2>
 
-    <form action="{{ route('addresses.update', $address->id) }}" method="POST">
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <strong>Whoops!</strong> Please fix the following issues:
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <form action="{{ route('addresses.update', $address->id) }}" method="POST" class="card shadow-sm p-4">
         @csrf
         @method('PUT')
 
-        <div class="form-group mb-3">
-            <label>Purok</label>
-            <input type="text" name="purok" class="form-control" value="{{ $address->purok }}" required>
+        <div class="row g-3">
+            <div class="col-md-4">
+                <label class="form-label">House Number <span class="text-danger">*</span></label>
+                <input type="text" name="house_number" class="form-control" value="{{ old('house_number', $address->house_number) }}" required>
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label">Street Name <span class="text-danger">*</span></label>
+                <input type="text" name="street_name" class="form-control" value="{{ old('street_name', $address->street_name) }}" required>
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label">Purok <span class="text-danger">*</span></label>
+                <input type="text" name="purok" class="form-control" value="{{ old('purok', $address->purok) }}" required>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Barangay <span class="text-danger">*</span></label>
+                <input type="text" name="barangay" class="form-control" value="{{ old('barangay', $address->barangay) }}" required>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">City <span class="text-danger">*</span></label>
+                <input type="text" name="city" class="form-control" value="{{ old('city', $address->city) }}" required>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Province <span class="text-danger">*</span></label>
+                <input type="text" name="province" class="form-control" value="{{ old('province', $address->province) }}" required>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Postal Code <span class="text-danger">*</span></label>
+                <input type="text" name="postal_code" class="form-control" value="{{ old('postal_code', $address->postal_code) }}" required>
+            </div>
         </div>
 
-        <div class="form-group mb-3">
-            <label>House Number</label>
-            <input type="text" name="house_number" class="form-control" value="{{ $address->house_number }}" required>
+        <div class="text-end mt-4">
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-save me-1"></i> Update Address
+            </button>
+            <a href="{{ route('addresses.index') }}" class="btn btn-secondary ms-2">Cancel</a>
         </div>
-        
-        <div class="form-group mb-3">
-            <label>Street Name</label>
-            <input type="text" name="street_name" class="form-control" value="{{ $address->street_name }}" required>
-        </div>
-
-        <div class="form-group mb-3">
-            <label>Village</label>
-            <input type="text" name="village" class="form-control" value="{{ $address->village }}" required>
-        </div>
-
-        <div class="form-group mb-3">
-            <label>Barangay</label>
-            <input type="text" name="barangay" class="form-control" value="{{ $address->barangay }}">
-        </div>
-
-        <div class="form-group mb-3">
-            <label>City</label>
-            <input type="text" name="city" class="form-control" value="{{ $address->city }}" required>
-        </div>
-
-        <div class="form-group mb-3">
-            <label>Province</label>
-            <input type="text" name="province" class="form-control" value="{{ $address->province }}">
-        </div>
-
-        <div class="form-group mb-3">
-            <label>Postal Code</label>
-            <input type="text" name="postal_code" class="form-control" value="{{ $address->postal_code }}" required>
-        </div>
-        
-        <button type="submit" class="btn btn-success mt-3">Update Address</button>
     </form>
 </div>
 @endsection

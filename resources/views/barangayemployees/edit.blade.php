@@ -2,44 +2,75 @@
 
 @section('content')
 <div class="container">
-    <h1>Edit BarangayEmployee</h1>
+    <h2 class="mb-4"><i class="bi bi-pencil-square me-2"></i>Edit Barangay Employee</h2>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <strong>Whoops!</strong>
+            <ul class="mb-0">@foreach ($errors->all() as $error) <li>{{ $error }}</li> @endforeach</ul>
+        </div>
+    @endif
 
-    <form action="{{ route('barangayemployees.update', $barangayemployee->id) }}" method="POST">
+    <form action="{{ route('barangayemployees.update', $barangayemployee->id) }}" method="POST" class="card shadow-sm p-4">
         @csrf
         @method('PUT')
 
-        <div class="form-group mb-3">
-            <label>Position ID</label>
-            <select name="position_id" class="form-control" required>
-                @foreach ($barangayPositions as $barangayPosition)
-                    <option value="{{ $barangayPosition->id }}" {{ $barangayemployee->position_id == $barangayPosition->id ? 'selected' : '' }}>
-                        {{ $barangayPosition->position_name ?? 'No BarangayPosition' }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-        
-        <div class="form-group mb-3">
-            <label>First Name</label>
-            <input type="text" name="first_name" class="form-control" value="{{ $barangayemployee->first_name }}" required>
-        </div>
-        
-        <div class="form-group mb-3">
-            <label>Middle Name</label>
-            <input type="text" name="middle_name" class="form-control" value="{{ $barangayemployee->middle_name }}" required>
-        </div>
-        
-        <div class="form-group mb-3">
-            <label>Last Name</label>
-            <input type="text" name="last_name" class="form-control" value="{{ $barangayemployee->last_name }}" required>
-        </div>
-        
-        <div class="form-group mb-3">
-            <label>Contact Number</label>
-            <input type="text" name="contact_number" class="form-control" value="{{ $barangayemployee->contact_number }}" required>
+        <div class="row g-3">
+            <div class="col-md-4">
+                <label class="form-label">First Name <span class="text-danger">*</span></label>
+                <input type="text" name="first_name" class="form-control" value="{{ old('first_name', $barangayemployee->first_name) }}" required>
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label">Middle Name</label>
+                <input type="text" name="middle_name" class="form-control" value="{{ old('middle_name', $barangayemployee->middle_name) }}">
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label">Last Name <span class="text-danger">*</span></label>
+                <input type="text" name="last_name" class="form-control" value="{{ old('last_name', $barangayemployee->last_name) }}" required>
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label">Position <span class="text-danger">*</span></label>
+                <select name="position_id" class="form-select" required>
+                    <option value="">-- Select Position --</option>
+
+                    @foreach ($barangayPositions as $position)
+                        <option value="{{ $position->id }}" {{ $barangayemployee->position_id == $position->id ? 'selected' : '' }}>
+                            {{ $position->position_name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label">Contact Number</label>
+                <input 
+                    type="text"
+                    name="contact_number"
+                    class="form-control"
+                    maxlength="11"
+                    pattern="09\d{9}"
+                    inputmode="numeric"
+                    oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11)"
+                    placeholder="e.g. 09123456789"
+                >
+                @if ($errors->has('contact_number'))
+                    <div class="text-danger small">{{ $errors->first('contact_number') }}</div>
+                @endif
+                <small class="text-muted">Must be a valid 11-digit mobile number starting with 09</small>
+            </div>
+            
+            <div class="col-md-4">
+                <label class="form-label">Start Date <span class="text-danger">*</span></label>
+                <input type="date" name="start_date" class="form-control" value="{{ old('start_date', $barangayemployee->start_date) }}" required>
+            </div>
         </div>
 
-        <button type="submit" class="btn btn-success mt-3">Update BarangayEmployee</button>
+        <div class="text-end mt-4">
+            <button type="submit" class="btn btn-primary"><i class="bi bi-save me-1"></i> Update</button>
+            <a href="{{ route('barangayemployees.index') }}" class="btn btn-secondary ms-2">Cancel</a>
+        </div>
     </form>
 </div>
 @endsection
