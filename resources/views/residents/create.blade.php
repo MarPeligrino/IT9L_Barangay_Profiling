@@ -56,7 +56,6 @@
                 </select>
                 <div class="form-check mt-1">
                     <input class="form-check-input" type="checkbox" id="sameAddressCheckbox">
-                    <input type="hidden" name="current_address_id" id="current_address_hidden">
                     <label class="form-check-label" for="sameAddressCheckbox">
                         Same as Permanent Address
                     </label>
@@ -158,20 +157,15 @@
         const checkbox = document.getElementById('sameAddressCheckbox');
         const householdSelect = document.getElementById('household_id');
         const currentAddressSelect = document.getElementById('current_address_id');
-        const currentAddressHidden = document.getElementById('current_address_hidden');
+        const birthdayInput = document.getElementById('birthdayInput');
 
         // Set max date for birthday to today
-        const birthdayInput = document.getElementById('birthdayInput');
         const today = new Date().toISOString().split('T')[0];
         birthdayInput.setAttribute('max', today);
 
         function syncAddresses() {
             if (checkbox.checked) {
-                currentAddressSelect.disabled = true;
-                currentAddressHidden.value = householdSelect.value;
-            } else {
-                currentAddressSelect.disabled = false;
-                currentAddressHidden.value = '';
+                currentAddressSelect.value = householdSelect.value;
             }
         }
 
