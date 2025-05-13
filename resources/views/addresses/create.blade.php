@@ -19,6 +19,12 @@
         @csrf
 
         <div class="row g-3">
+
+            <div class="col-md-4">
+                <label class="form-label">Purok <span class="text-danger">*</span></label>
+                <input type="text" name="purok" class="form-control" value="{{ old('purok') }}" required>
+            </div>
+
             <div class="col-md-4">
                 <label class="form-label">House Number <span class="text-danger">*</span></label>
                 <input type="text" name="house_number" class="form-control" value="{{ old('house_number') }}" required>
@@ -30,16 +36,16 @@
             </div>
 
             <div class="col-md-4">
-                <label class="form-label">Purok <span class="text-danger">*</span></label>
-                <input type="text" name="purok" class="form-control" value="{{ old('purok') }}" required>
+                <label class="form-label">Village <span class="text-danger">*</span></label>
+                <input type="text" name="village" class="form-control" value="{{ old('village') }}" required>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <label class="form-label">Barangay <span class="text-danger">*</span></label>
                 <input type="text" name="barangay" class="form-control" value="{{ old('barangay') }}" required>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <label class="form-label">City <span class="text-danger">*</span></label>
                 <input type="text" name="city" class="form-control" value="{{ old('city') }}" required>
             </div>

@@ -106,10 +106,9 @@
                                 return "<a href=\"$url\" class=\"sortable $class\">$label <i class=\"bi $icon sort-icon\"></i></a>";
                             }
                         @endphp
-
+                        <th>{!! sortLink('purok', 'Purok', $currentSort, $currentOrder) !!}</th>
                         <th>{!! sortLink('house_number', 'House #', $currentSort, $currentOrder) !!}</th>
                         <th>{!! sortLink('street_name', 'Street', $currentSort, $currentOrder) !!}</th>
-                        <th>{!! sortLink('purok', 'Purok', $currentSort, $currentOrder) !!}</th>
                         <th>{!! sortLink('barangay', 'Barangay', $currentSort, $currentOrder) !!}</th>
                         <th>{!! sortLink('city', 'City', $currentSort, $currentOrder) !!}</th>
                         <th>{!! sortLink('province', 'Province', $currentSort, $currentOrder) !!}</th>
@@ -122,9 +121,9 @@
                 <tbody>
                     @forelse ($addresses as $address)
                         <tr>
+                            <td>{{ $address->purok }}</td>
                             <td>{{ $address->house_number }}</td>
                             <td>{{ $address->street_name }}</td>
-                            <td>{{ $address->purok }}</td>
                             <td>{{ $address->barangay }}</td>
                             <td>{{ $address->city }}</td>
                             <td>{{ $address->province }}</td>
