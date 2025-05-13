@@ -13,12 +13,8 @@
         border-top: none;
     }
 
-    .breadcrumb a {
-        text-decoration: none;
-    }
-
-    .breadcrumb a:hover {
-        text-decoration: underline;
+    .quick-actions .btn {
+        min-width: 180px;
     }
 </style>
 
@@ -31,77 +27,44 @@
         </div>
     </div>
 
+    <!-- Dashboard Cards -->
     <div class="row g-3">
         <!-- Residents -->
-        <div class="col-md-6 col-xl-3">
-            <div class="card text-white bg-primary h-100">
-                <div class="card-body d-flex justify-content-between align-items-center">
-                    <div>
-                        <h2 class="fw-bold">{{ $residentsCount }}</h2>
-                        <p class="mb-0">Total Residents</p>
-                    </div>
-                    <i class="bi bi-person-plus-fill fs-1 text-white-50"></i>
-                </div>
-                <div class="card-footer text-end">
-                    <a href="{{ route('residents.index') }}" class="text-white text-decoration-none px-2 py-1 dashboard-btn">
-                        More info <i class="bi bi-arrow-right-circle"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
+        <x-dashboard.card count="{{ $residentsCount }}" label="Total Residents" icon="person-plus-fill" color="primary" route="residents.index" />
 
         <!-- Addresses -->
-        <div class="col-md-6 col-xl-3">
-            <div class="card text-white bg-success h-100">
-                <div class="card-body d-flex justify-content-between align-items-center">
-                    <div>
-                        <h2 class="fw-bold">{{ $addressCount }}</h2>
-                        <p class="mb-0">Total Addresses</p>
-                    </div>
-                    <i class="bi bi-geo-alt-fill fs-1 text-white-50"></i>
-                </div>
-                <div class="card-footer text-end">
-                    <a href="{{ route('addresses.index') }}" class="text-white text-decoration-none px-2 py-1 dashboard-btn">
-                        More info <i class="bi bi-arrow-right-circle"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
+        <x-dashboard.card count="{{ $addressCount }}" label="Total Addresses" icon="geo-alt-fill" color="success" route="addresses.index" />
 
-        <!-- Employees -->
-        <div class="col-md-6 col-xl-3">
-            <div class="card text-white bg-warning h-100">
-                <div class="card-body d-flex justify-content-between align-items-center">
-                    <div>
-                        <h2 class="fw-bold">{{ $employeeCount }}</h2>
-                        <p class="mb-0">Barangay Employees</p>
-                    </div>
-                    <i class="bi bi-person-badge-fill fs-1 text-white-50"></i>
-                </div>
-                <div class="card-footer text-end">
-                    <a href="{{ route('barangayemployees.index') }}" class="text-white text-decoration-none px-2 py-1 dashboard-btn">
-                        More info <i class="bi bi-arrow-right-circle"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
+        <!-- Barangay Employees -->
+        <x-dashboard.card count="{{ $employeeCount }}" label="Barangay Employees" icon="person-badge-fill" color="warning" route="barangayemployees.index" />
 
         <!-- Businesses -->
-        <div class="col-md-6 col-xl-3">
-            <div class="card text-white bg-danger h-100">
-                <div class="card-body d-flex justify-content-between align-items-center">
-                    <div>
-                        <h2 class="fw-bold">{{ $businessCount }}</h2>
-                        <p class="mb-0">Registered Businesses</p>
-                    </div>
-                    <i class="bi bi-briefcase-fill fs-1 text-white-50"></i>
-                </div>
-                <div class="card-footer text-end">
-                    <a href="{{ route('businesses.index') }}" class="text-white text-decoration-none px-2 py-1 dashboard-btn">
-                        More info <i class="bi bi-arrow-right-circle"></i>
-                    </a>
-                </div>
-            </div>
+        <x-dashboard.card count="{{ $businessCount }}" label="Registered Businesses" icon="briefcase-fill" color="danger" route="businesses.index" />
+
+        <!-- Family Roles -->
+        <x-dashboard.card count="{{ $roleCount }}" label="Family Roles" icon="people-fill" color="secondary" route="familyroles.index" />
+
+        <!-- Barangay Positions -->
+        <x-dashboard.card count="{{ $positionCount }}" label="Barangay Positions" icon="clipboard-data-fill" color="info" route="barangaypositions.index" />
+
+        <!-- Business Types -->
+        <x-dashboard.card count="{{ $businessTypeCount }}" label="Business Types" icon="tags-fill" color="dark" route="businessTypes.index" />
+
+        <!-- Business Permits -->
+        <x-dashboard.card count="{{ $permitCount }}" label="Permits Issued" icon="file-earmark-text-fill" color="primary" route="businessPermits.index" />
+
+        <!-- Transactions -->
+        <x-dashboard.card count="{{ $transactionCount }}" label="Permit Transactions" icon="receipt-cutoff" color="success" route="permitTransactions.index" />
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="mt-5">
+        <h4>Quick Actions</h4>
+        <div class="d-flex flex-wrap gap-3 quick-actions">
+            <a href="{{ route('residents.create') }}" class="btn btn-outline-primary"><i class="bi bi-person-plus-fill me-1"></i> Add Resident</a>
+            <a href="{{ route('businesses.create') }}" class="btn btn-outline-success"><i class="bi bi-building me-1"></i> Add Business</a>
+            <a href="{{ route('businessPermits.create') }}" class="btn btn-outline-warning"><i class="bi bi-file-earmark-plus me-1"></i> Issue Permit</a>
+            <a href="{{ route('permitTransactions.index') }}" class="btn btn-outline-info"><i class="bi bi-receipt me-1"></i> View Transactions</a>
         </div>
     </div>
 
