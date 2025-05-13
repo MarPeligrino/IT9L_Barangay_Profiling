@@ -3,6 +3,7 @@
 use App\Http\Controllers\BarangayEmployeeController;
 use App\Http\Controllers\BarangayPositionController;
 use App\Http\Controllers\BusinessController;
+use App\Http\Controllers\BusinessPermitController;
 use App\Http\Controllers\BusinessTypeController;
 use App\Http\Controllers\FamilyRoleController;
 use App\Http\Controllers\ResidentController;
@@ -30,6 +31,9 @@ Route::resource('businesses', BusinessController::class);
 
 //BUSINESSTYPE WITH RESOURCE
 Route::resource('businessTypes', BusinessTypeController::class);
+
+//BUSINESSPERMIT WITH RESOURCE
+Route::resource('businessPermits', BusinessPermitController::class);
 
 // DASHBOARD
 Route::get('/', [DashboardController::class, 'index']);

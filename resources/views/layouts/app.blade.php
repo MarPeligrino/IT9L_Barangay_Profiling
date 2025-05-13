@@ -174,6 +174,9 @@
       <a class="nav-link {{ Request::is('businessTypes*') ? 'active' : '' }}" href="{{ route('businessTypes.index') }}">
         <span><i class="bi bi-tags-fill"></i> Business Types</span>
       </a>
+      <a class="nav-link {{ Request::is('businessPermits*') ? 'active' : '' }}" href="{{ route('businessPermits.index') }}">
+        <span><i class="bi bi-tags-fill"></i> Business Permits</span>
+      </a>
     </nav>
   </div>
 

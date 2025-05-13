@@ -9,30 +9,43 @@ use Illuminate\Http\Request;
 
 class BusinessPermitController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        $businessPermits = BusinessPermit::all();
+        $query = BusinessPermit::with(['business', 'barangayEmployee']);
+
+        // Search by business name
+        if ($search = $request->input('search')) {
+            $query->whereHas('business', function ($q) use ($search) {
+                $q->where('business_name', 'like', "%{$search}%");
+            });
+        }
+
+        // Filter by status
+        if ($status = $request->input('status')) {
+            $query->where('status', $status);
+        }
+
+        // Sorting
+        $sortableFields = ['issued_date', 'expiry_date', 'status', 'created_at', 'updated_at'];
+        $sortBy = in_array($request->input('sort_by'), $sortableFields) ? $request->input('sort_by') : 'created_at';
+        $order = $request->input('order') === 'asc' ? 'asc' : 'desc';
+
+        $businessPermits = $query->orderBy($sortBy, $order)
+                                ->paginate(10)
+                                ->appends($request->except('page'));
 
         return view('businessPermits.index', compact('businessPermits'));
-    
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
         $businesses = Business::all();
         $barangayEmployees = BarangayEmployee::all();
+
         return view('businessPermits.create', compact('businesses', 'barangayEmployees'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -40,25 +53,22 @@ class BusinessPermitController extends Controller
             'barangay_employee_id' => 'required|exists:barangay_employees,id',
             'issued_date' => 'required|date',
             'expiry_date' => 'required|date',
-            'status' => 'required|string|max:50' ,
+            'status' => 'required|string|max:50',
         ]);
 
-        BusinessPermit::create($validated);
-        return redirect()->route('businessPermits.index')->with('success', 'BusinessPermit Added');
-    
+        $permit = BusinessPermit::create($validated);
+
+        // 🔔 Log activity
+        log_activity("Business Permit issued to business ID {$permit->business_id} by employee ID {$permit->barangay_employee_id}");
+
+        return redirect()->route('businessPermits.index')->with('success', 'Business Permit added.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(BusinessPermit $businessPermit)
     {
         return view('businessPermits.show', compact('businessPermit'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(BusinessPermit $businessPermit)
     {
         $businesses = Business::all();
@@ -67,32 +77,31 @@ class BusinessPermitController extends Controller
         return view('businessPermits.edit', compact('businesses', 'barangayEmployees', 'businessPermit'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, BusinessPermit $businessPermit)
     {
         $validated = $request->validate([
             'business_id' => 'required|exists:businesses,id',
             'barangay_employee_id' => 'required|exists:barangay_employees,id',
             'issued_date' => 'required|date',
-            'exiry_date' => 'required|date',
-            'status' => 'required|string|max:50' ,
+            'expiry_date' => 'required|date',
+            'status' => 'required|string|max:50',
         ]);
 
         $businessPermit->update($validated);
 
-        return redirect()->route('businessPermits.index')->with('success', "BusinessPermit updated successfully.");
+        // 🔔 Log activity
+        log_activity("Business Permit updated for business ID {$businessPermit->business_id}");
+
+        return redirect()->route('businessPermits.index')->with('success', 'Business Permit updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(BusinessPermit $businessPermit)
     {
+        // 🔔 Log activity
+        log_activity("Business Permit deleted for business ID {$businessPermit->business_id}");
+
         $businessPermit->delete();
 
-        return redirect()->route('businessPermits.index')->with('success', 'BusinessPermit deleted successfully.');
-    
+        return redirect()->route('businessPermits.index')->with('success', 'Business Permit deleted successfully.');
     }
 }
