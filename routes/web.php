@@ -12,6 +12,7 @@ use App\Http\Controllers\AddressController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,11 +33,25 @@ Route::middleware('guest')->group(function () {
     // Register routes
     Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
     Route::post('/register', [RegisterController::class, 'register']);
+
+    // Forgot Password routes
+    Route::get('/forgot-password', [UserController::class, 'showForgotPasswordForm'])->name('password.request');
+    Route::post('/forgot-password', [UserController::class, 'sendResetLinkEmail'])->name('password.email');
+
+    // Password Reset routes
+    Route::get('/reset-password/{token}', [UserController::class, 'showResetPasswordForm'])->name('password.reset');
+    Route::post('/reset-password', [UserController::class, 'resetPassword'])->name('password.update');
 });
 
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // User Profile and Settings routes
+    Route::get('/profile', [UserController::class, 'profile'])->name('profile');
+    Route::put('/profile', [UserController::class, 'updateProfile'])->name('profile.update');
+    Route::get('/settings', [UserController::class, 'settings'])->name('settings');
+    Route::put('/settings', [UserController::class, 'updateSettings'])->name('settings.update');
 });
 
 //RESIDENTS WITH RESOURCE

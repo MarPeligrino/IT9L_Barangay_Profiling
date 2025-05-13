@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In - Barangay Profiling System</title>
+    <title>Reset Password - Barangay Profiling System</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         body {
@@ -17,7 +17,7 @@
             background-size: cover;
             color: #fff;
         }
-        .login-container {
+        .reset-container {
             background: rgba(0, 0, 0, 0.98);
             padding: 20px;
             border-radius: 10px;
@@ -55,18 +55,7 @@
             display: block;
             margin-bottom: 5px;
         }
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .checkbox-group input[type="checkbox"] {
-            width: auto;
-        }
-        .checkbox-group label {
-            margin: 0;
-        }
-        .btn-login {
+        .btn-reset {
             width: 100%;
             padding: 10px;
             background-color: #28a745;
@@ -75,19 +64,8 @@
             border-radius: 4px;
             cursor: pointer;
         }
-        .btn-login:hover {
+        .btn-reset:hover {
             background-color: #218838;
-        }
-        .forgot-password,
-        .register-link {
-            display: block;
-            margin-top: 10px;
-            color: #007bff;
-            text-decoration: none;
-        }
-        .forgot-password:hover,
-        .register-link:hover {
-            text-decoration: underline;
         }
         .text-danger {
             color: #dc3545;
@@ -96,37 +74,36 @@
     </style>
 </head>
 <body>
-    <div class="login-container">
+    <div class="reset-container">
         <img src="/images/catgrandelogo.jpg" alt="Barangay Logo" class="logo">
-        <div class="title">Brgy. Profiling Cat Grande</div>
-        @if (session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
+        <div class="title">Reset Password</div>
+        @if (session('status'))
+            <div class="alert alert-success">
+                {{ session('status') }}
             </div>
         @endif
-        <form method="POST" action="{{ route('login') }}">
+        <form method="POST" action="{{ route('password.update') }}">
             @csrf
+            <input type="hidden" name="token" value="{{ $token }}">
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" name="email" id="email" value="{{ old('email') }}" required autofocus>
+                <input type="email" name="email" id="email" value="{{ old('email') }}" required>
                 @error('email')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
             <div class="form-group">
-                <label for="password">Password</label>
+                <label for="password">New Password</label>
                 <input type="password" name="password" id="password" required>
                 @error('password')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
-            <div class="form-group checkbox-group">
-                <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                <label for="remember">Remember Me!</label>
+            <div class="form-group">
+                <label for="password_confirmation">Confirm New Password</label>
+                <input type="password" name="password_confirmation" id="password_confirmation" required>
             </div>
-            <button type="submit" class="btn-login">LOG IN</button>
-            <a href="{{ route('password.request') }}" class="forgot-password">Forgot Password?</a>
-            <a href="{{ route('register') }}" class="register-link">Don't have an account? Sign up</a>
+            <button type="submit" class="btn-reset">Reset Password</button>
         </form>
     </div>
 </body>
