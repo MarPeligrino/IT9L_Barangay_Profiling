@@ -6,6 +6,7 @@ use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\BusinessPermitController;
 use App\Http\Controllers\BusinessTypeController;
 use App\Http\Controllers\FamilyRoleController;
+use App\Http\Controllers\PermitTransactionsController;
 use App\Http\Controllers\ResidentController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\DashboardController;
@@ -34,6 +35,9 @@ Route::resource('businessTypes', BusinessTypeController::class);
 
 //BUSINESSPERMIT WITH RESOURCE
 Route::resource('businessPermits', BusinessPermitController::class);
+
+//BUSINESSPERMIT WITH RESOURCE
+Route::resource('permitTransactions', PermitTransactionsController::class);
 
 // DASHBOARD
 Route::get('/', [DashboardController::class, 'index']);

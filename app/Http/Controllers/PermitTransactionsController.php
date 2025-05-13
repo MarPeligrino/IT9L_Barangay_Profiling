@@ -11,13 +11,35 @@ class PermitTransactionsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $permitTransactions = PermitTransaction::all();
+        $query = \App\Models\PermitTransaction::with('businessPermit.business');
+
+        // Search by business name
+        if ($search = $request->input('search')) {
+            $query->whereHas('businessPermit.business', function ($q) use ($search) {
+                $q->where('business_name', 'like', "%{$search}%");
+            });
+        }
+
+        // Filter by payment status
+        if ($status = $request->input('payment_status')) {
+            $query->where('payment_status', $status);
+        }
+
+        // Sortable fields
+        $sortableFields = ['amount_paid', 'payment_date', 'payment_status', 'created_at', 'updated_at'];
+        $sortBy = in_array($request->input('sort_by'), $sortableFields) ? $request->input('sort_by') : 'created_at';
+        $order = $request->input('order') === 'asc' ? 'asc' : 'desc';
+
+        // Pagination with sorting
+        $permitTransactions = $query->orderBy($sortBy, $order)
+                                    ->paginate(10)
+                                    ->appends($request->except('page'));
 
         return view('permitTransactions.index', compact('permitTransactions'));
-    
     }
+
 
     /**
      * Show the form for creating a new resource.

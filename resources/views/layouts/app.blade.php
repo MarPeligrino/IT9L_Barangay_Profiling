@@ -175,7 +175,10 @@
         <span><i class="bi bi-tags-fill"></i> Business Types</span>
       </a>
       <a class="nav-link {{ Request::is('businessPermits*') ? 'active' : '' }}" href="{{ route('businessPermits.index') }}">
-        <span><i class="bi bi-tags-fill"></i> Business Permits</span>
+        <span><i class="bi bi-card-checklist"></i> Business Permits</span>
+      </a>
+      <a class="nav-link {{ Request::is('permitTransactions*') ? 'active' : '' }}" href="{{ route('permitTransactions.index') }}">
+        <span><i class="bi bi-receipt-cutoff"></i> Permit Transactions</span>
       </a>
     </nav>
   </div>
