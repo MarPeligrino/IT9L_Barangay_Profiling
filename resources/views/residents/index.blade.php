@@ -29,6 +29,10 @@
         </a>
     </div>
 
+    @if (session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+
     <form method="GET" action="{{ route('residents.index') }}" class="row g-2 mb-3 align-items-end">
         <div class="col-md-4">
             <div class="input-group">

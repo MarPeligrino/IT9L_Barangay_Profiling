@@ -31,15 +31,21 @@
 
             <div class="col-md-4">
                 <label class="form-label">Position <span class="text-danger">*</span></label>
-                <select name="position_id" class="form-select" required>
-                    <option value="">-- Select Position --</option>
-                    @foreach ($barangayPositions as $position)
-                        <option value="{{ $position->id }}" {{ old('position_id') == $position->id ? 'selected' : '' }}>
-                            {{ $position->position_name }}
-                        </option>
-                    @endforeach
-                </select>
+                <div class="input-group">
+                    <select name="position_id" class="form-select" required>
+                        <option value="">-- Select Position --</option>
+                        @foreach ($barangayPositions as $position)
+                            <option value="{{ $position->id }}" {{ old('position_id') == $position->id ? 'selected' : '' }}>
+                                {{ $position->position_name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <a href="{{ route('barangaypositions.create') }}" class="btn btn-success" title="Add New Position">
+                        <i class="bi bi-plus-circle"></i>
+                    </a>
+                </div>
             </div>
+
 
             <div class="col-md-4">
                 <label class="form-label">Contact Number</label>
