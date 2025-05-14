@@ -53,6 +53,14 @@
         <x-dashboard.card count="{{ $transactionCount }}" label="Permit Transactions" icon="receipt-cutoff" color="info" route="permitTransactions.index" />
     </div>
 
+    <!-- 🧾 Reports & Complaints -->
+    <h4 class="mt-5">🧾 Reports & Complaints</h4>
+    <div class="row g-3">
+        <x-dashboard.card count="{{ $incidentReportsCount }}" label="Incident Reports" icon="exclamation-triangle-fill" color="danger" route="incidentReports.index" />
+        <x-dashboard.card count="{{ $complaintsCount }}" label="Filed Complaints" icon="file-earmark-excel-fill" color="warning" route="complaints.index" />
+        <x-dashboard.card count="{{ $certificatesCount }}" label="Certificates Issued" icon="file-earmark-check-fill" color="info" route="barangayCertificates.index" />
+    </div>
+
     <!-- 👔 Governance -->
     <h4 class="mt-5">👔 Governance</h4>
     <div class="row g-3">
@@ -67,6 +75,9 @@
         <a href="{{ route('businesses.create') }}" class="btn btn-outline-success"><i class="bi bi-building me-1"></i> Add Business</a>
         <a href="{{ route('businessPermits.create') }}" class="btn btn-outline-warning"><i class="bi bi-file-earmark-plus me-1"></i> Issue Permit</a>
         <a href="{{ route('permitTransactions.index') }}" class="btn btn-outline-info"><i class="bi bi-receipt me-1"></i> View Transactions</a>
+        <a href="{{ route('incidentReports.create') }}" class="btn btn-outline-danger"><i class="bi bi-exclamation-triangle-fill me-1"></i> File Incident Report</a>
+        <a href="{{ route('complaints.create') }}" class="btn btn-outline-warning"><i class="bi bi-file-earmark-text me-1"></i> Lodge Complaint</a>
+        <a href="{{ route('barangayCertificates.create') }}" class="btn btn-outline-info"><i class="bi bi-file-earmark-check me-1"></i> Issue Certificate</a>
     </div>
 
     <!-- 📈 Monthly Trends -->
