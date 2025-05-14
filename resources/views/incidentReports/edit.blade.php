@@ -20,10 +20,10 @@
         @method('PUT')
 
         <div class="row g-3">
-            <!-- 👮 Barangay Employee -->
+            <!-- 👮 Employee -->
             <div class="col-md-6">
-                <label for="barangay_employee_id" class="form-label">Barangay Employee <span class="text-danger">*</span></label>
-                <select name="barangay_employee_id" id="barangay_employee_id" class="form-select" required>
+                <label class="form-label">Barangay Employee <span class="text-danger">*</span></label>
+                <select name="barangay_employee_id" class="form-select" required>
                     <option value="">-- Select Employee --</option>
                     @foreach ($barangayEmployees as $employee)
                         <option value="{{ $employee->id }}" {{ old('barangay_employee_id', $incidentReport->barangay_employee_id) == $employee->id ? 'selected' : '' }}>
@@ -33,22 +33,22 @@
                 </select>
             </div>
 
-            <!-- 🗓 Report Date -->
+            <!-- 🗓 Date -->
             <div class="col-md-6">
-                <label for="report_date" class="form-label">Report Date <span class="text-danger">*</span></label>
-                <input type="date" name="report_date" id="report_date" class="form-control" value="{{ old('report_date', $incidentReport->report_date) }}" required>
+                <label class="form-label">Report Date <span class="text-danger">*</span></label>
+                <input type="date" name="report_date" class="form-control" value="{{ old('report_date', $incidentReport->report_date) }}" required>
             </div>
 
             <!-- 📝 Remarks -->
             <div class="col-md-12">
-                <label for="remarks" class="form-label">Remarks <span class="text-danger">*</span></label>
-                <textarea name="remarks" id="remarks" class="form-control" rows="3" required>{{ old('remarks', $incidentReport->remarks) }}</textarea>
+                <label class="form-label">Remarks</label>
+                <textarea name="remarks" class="form-control" rows="3">{{ old('remarks', $incidentReport->remarks) }}</textarea>
             </div>
 
-            <!-- 🔖 Status ENUM -->
+            <!-- 🔖 Status -->
             <div class="col-md-6">
-                <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
-                <select name="status" id="status" class="form-select" required>
+                <label class="form-label">Status <span class="text-danger">*</span></label>
+                <select name="status" class="form-select" required>
                     <option value="">-- Select Status --</option>
                     <option value="pending" {{ old('status', $incidentReport->status) === 'pending' ? 'selected' : '' }}>Pending</option>
                     <option value="in_progress" {{ old('status', $incidentReport->status) === 'in_progress' ? 'selected' : '' }}>In Progress</option>
@@ -56,6 +56,47 @@
                     <option value="closed" {{ old('status', $incidentReport->status) === 'closed' ? 'selected' : '' }}>Closed</option>
                 </select>
             </div>
+        </div>
+
+        <hr class="my-4">
+
+        <!-- 👥 Parties -->
+        <h5 class="fw-bold mb-2"><i class="bi bi-people-fill me-2"></i>Incident Report Parties</h5>
+        <div id="party-container">
+            @foreach ($incidentReport->parties as $index => $party)
+                <div class="row g-2 mb-2 party-row">
+                    <input type="hidden" name="parties[{{ $index }}][id]" value="{{ $party->id }}">
+                    <div class="col-md-6">
+                        <select name="parties[{{ $index }}][resident_id]" class="form-select" required>
+                            <option value="">-- Select Resident --</option>
+                            @foreach ($residents as $resident)
+                                <option value="{{ $resident->id }}" {{ $resident->id == $party->resident_id ? 'selected' : '' }}>
+                                    {{ $resident->first_name }} {{ $resident->last_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-5">
+                        <select name="parties[{{ $index }}][role]" class="form-select" required>
+                            <option value="">-- Select Role --</option>
+                            <option value="complainant" {{ $party->role == 'complainant' ? 'selected' : '' }}>Complainant</option>
+                            <option value="respondent" {{ $party->role == 'respondent' ? 'selected' : '' }}>Respondent</option>
+                            <option value="witness" {{ $party->role == 'witness' ? 'selected' : '' }}>Witness</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-danger btn-remove-party w-100">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        <div class="mb-3">
+            <button type="button" class="btn btn-outline-primary" id="add-party-btn">
+                <i class="bi bi-plus-circle me-1"></i> Add Party
+            </button>
         </div>
 
         <div class="mt-4 d-flex justify-content-between">
@@ -68,4 +109,48 @@
         </div>
     </form>
 </div>
+
+<!-- JS for dynamic party rows -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let partyIndex = {{ $incidentReport->parties->count() }};
+
+        document.getElementById('add-party-btn').addEventListener('click', function () {
+            const container = document.getElementById('party-container');
+            const newRow = document.createElement('div');
+            newRow.classList.add('row', 'g-2', 'mb-2', 'party-row');
+            newRow.innerHTML = `
+                <div class="col-md-6">
+                    <select name="parties[${partyIndex}][resident_id]" class="form-select" required>
+                        <option value="">-- Select Resident --</option>
+                        @foreach ($residents as $resident)
+                            <option value="{{ $resident->id }}">{{ $resident->first_name }} {{ $resident->last_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-5">
+                    <select name="parties[${partyIndex}][role]" class="form-select" required>
+                        <option value="">-- Select Role --</option>
+                        <option value="complainant">Complainant</option>
+                        <option value="respondent">Respondent</option>
+                        <option value="witness">Witness</option>
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-danger btn-remove-party w-100">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+            `;
+            container.appendChild(newRow);
+            partyIndex++;
+        });
+
+        document.getElementById('party-container').addEventListener('click', function (e) {
+            if (e.target.closest('.btn-remove-party')) {
+                e.target.closest('.party-row').remove();
+            }
+        });
+    });
+</script>
 @endsection

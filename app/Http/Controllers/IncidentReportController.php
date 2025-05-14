@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\IncidentReport;
 use App\Models\BarangayEmployee;
+use App\Models\IncidentReportParty;
 use App\Models\Resident; // ✅ Include Resident model
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -81,7 +82,9 @@ class IncidentReportController extends Controller
     public function edit(IncidentReport $incidentReport)
     {
         $barangayEmployees = BarangayEmployee::all();
-        return view('incidentReports.edit', compact('incidentReport', 'barangayEmployees'));
+        $residents = Resident::all(); // ✅ Add this
+
+        return view('incidentReports.edit', compact('incidentReport', 'barangayEmployees', 'residents'));
     }
 
     public function update(Request $request, IncidentReport $incidentReport)
@@ -89,17 +92,55 @@ class IncidentReportController extends Controller
         $validated = $request->validate([
             'barangay_employee_id' => 'required|exists:barangay_employees,id',
             'report_date' => 'required|date',
-            'remarks' => 'required|string',
-            'status' => 'required|string|max:50',
+            'remarks' => 'nullable|string',
+            'status' => 'required|in:pending,in_progress,resolved,closed',
+
+            // Validate nested party data
+            'parties.*.resident_id' => 'required|exists:residents,id',
+            'parties.*.role' => 'required|in:complainant,respondent,witness',
         ]);
 
-        $incidentReport->update($validated);
+        // Update main report
+        $incidentReport->update([
+            'barangay_employee_id' => $validated['barangay_employee_id'],
+            'report_date' => $validated['report_date'],
+            'remarks' => $validated['remarks'] ?? null,
+            'status' => $validated['status'],
+        ]);
 
-        Log::info('Incident report updated.', ['id' => $incidentReport->id]);
+        // Track party IDs to keep
+        $updatedPartyIds = [];
+
+        if ($request->has('parties')) {
+            foreach ($request->input('parties') as $partyData) {
+                if (isset($partyData['id'])) {
+                    // Update existing party
+                    $party = IncidentReportParty::find($partyData['id']);
+                    if ($party && $party->incident_report_id == $incidentReport->id) {
+                        $party->update([
+                            'resident_id' => $partyData['resident_id'],
+                            'role' => $partyData['role'],
+                        ]);
+                        $updatedPartyIds[] = $party->id;
+                    }
+                } else {
+                    // Create new party
+                    $newParty = $incidentReport->parties()->create([
+                        'resident_id' => $partyData['resident_id'],
+                        'role' => $partyData['role'],
+                    ]);
+                    $updatedPartyIds[] = $newParty->id;
+                }
+            }
+        }
+
+        // Delete removed parties
+        $incidentReport->parties()->whereNotIn('id', $updatedPartyIds)->delete();
+
+        Log::info('Incident report updated with parties.', ['id' => $incidentReport->id]);
 
         return redirect()->route('incidentReports.index')->with('success', 'Incident Report updated successfully.');
     }
-
     public function destroy(IncidentReport $incidentReport)
     {
         $incidentReport->delete();
