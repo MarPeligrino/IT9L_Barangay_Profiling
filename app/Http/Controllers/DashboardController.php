@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Resident;
+use App\Models\BusinessPermit;
 use App\Models\Address;
 use App\Models\BarangayEmployee;
 use App\Models\Business;
 use App\Models\FamilyRole;
 use App\Models\BarangayPosition;
 use App\Models\BusinessType;
-use App\Models\BusinessPermit;
 use App\Models\PermitTransaction;
 use App\Models\RecentActivity;
 
@@ -19,14 +19,15 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // Monthly trends
+        // Monthly trends for residents
         $residentTrends = Resident::selectRaw("DATE_FORMAT(created_at, '%b %Y') as month, COUNT(*) as count")
-            ->groupBy('month')
+            ->groupBy(DB::raw("DATE_FORMAT(created_at, '%b %Y')"))
             ->orderByRaw("MIN(created_at)")
             ->get();
 
+        // Monthly trends for business permits
         $permitTrends = BusinessPermit::selectRaw("DATE_FORMAT(created_at, '%b %Y') as month, COUNT(*) as count")
-            ->groupBy('month')
+            ->groupBy(DB::raw("DATE_FORMAT(created_at, '%b %Y')"))
             ->orderByRaw("MIN(created_at)")
             ->get();
 

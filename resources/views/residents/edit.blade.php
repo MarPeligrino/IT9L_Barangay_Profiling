@@ -20,7 +20,7 @@
         @method('PUT')
 
         <div class="row g-3">
-            <!-- Address Information -->
+            <!-- 🏠 Permanent Address -->
             <div class="col-md-4">
                 <label class="form-label">Permanent Address <span class="text-danger">*</span></label>
                 <div class="input-group">
@@ -37,27 +37,38 @@
                 </div>
             </div>
 
+            <!-- 👪 Family Role -->
             <div class="col-md-4">
                 <label class="form-label">Family Role <span class="text-danger">*</span></label>
-                <select name="family_role_id" class="form-select" required>
-                    @foreach ($familyroles as $role)
-                        <option value="{{ $role->id }}" {{ $resident->family_role_id == $role->id ? 'selected' : '' }}>
-                            {{ $role->role }}
-                        </option>
-                    @endforeach
-                </select>
+                <div class="input-group">
+                    <select name="family_role_id" class="form-select" required>
+                        @foreach ($familyroles as $role)
+                            <option value="{{ $role->id }}" {{ $resident->family_role_id == $role->id ? 'selected' : '' }}>
+                                {{ $role->role }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <a href="{{ route('familyroles.create') }}" class="btn btn-success" title="Add New Family Role">
+                        <i class="bi bi-plus-circle"></i>
+                    </a>
+                </div>
             </div>
 
+            <!-- 🏠 Current Address -->
             <div class="col-md-4">
                 <label class="form-label">Current Address <span class="text-danger">*</span></label>
-                <select name="current_address_id" id="current_address_id" class="form-select" required>
-                    @foreach ($currentaddress as $address)
-                        <option value="{{ $address->id }}" {{ $resident->current_address_id == $address->id ? 'selected' : '' }}>
-                            {{ $address->formatted ?? $address->street_name }}, {{ $address->purok }}
-                        </option>
-                    @endforeach
-                </select>
-
+                <div class="input-group">
+                    <select name="current_address_id" id="current_address_id" class="form-select" required>
+                        @foreach ($currentaddress as $address)
+                            <option value="{{ $address->id }}" {{ $resident->current_address_id == $address->id ? 'selected' : '' }}>
+                                {{ $address->formatted ?? $address->street_name }}, {{ $address->purok }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <a href="{{ route('addresses.create') }}" class="btn btn-success" title="Add New Address">
+                        <i class="bi bi-plus-circle"></i>
+                    </a>
+                </div>
                 <div class="form-check mt-1">
                     <input class="form-check-input" type="checkbox" id="sameAddressCheckbox">
                     <label class="form-check-label" for="sameAddressCheckbox">
@@ -66,8 +77,7 @@
                 </div>
             </div>
 
-
-            <!-- Personal Info -->
+            <!-- 👤 Personal Info -->
             <div class="col-md-4">
                 <label class="form-label">First Name <span class="text-danger">*</span></label>
                 <input type="text" name="first_name" class="form-control" value="{{ $resident->first_name }}" required>
@@ -106,7 +116,7 @@
                 <input type="text" name="civil_status" class="form-control" value="{{ $resident->civil_status }}" required>
             </div>
 
-            <!-- Contact -->
+            <!-- ☎ Contact -->
             <div class="col-md-6">
                 <label class="form-label">Contact Number</label>
                 <input 
@@ -128,7 +138,7 @@
                 <input type="text" name="occupation" class="form-control" value="{{ $resident->occupation }}">
             </div>
 
-            <!-- Other -->
+            <!-- 🌍 Other -->
             <div class="col-md-6">
                 <label class="form-label">Nationality</label>
                 <input type="text" name="nationality" class="form-control" value="{{ $resident->nationality }}">
@@ -149,20 +159,24 @@
     </form>
 </div>
 
+<!-- Script to sync addresses -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const checkbox = document.getElementById('sameAddressCheckbox');
         const householdSelect = document.getElementById('household_id');
         const currentAddressSelect = document.getElementById('current_address_id');
+        const birthdayInput = document.getElementById('birthdayInput');
+
+        // Restrict birthday to today's date or earlier
+        const today = new Date().toISOString().split('T')[0];
+        birthdayInput.setAttribute('max', today);
 
         checkbox.addEventListener('change', function () {
             if (this.checked) {
-                // Set current address equal to permanent address (household_id)
                 currentAddressSelect.value = householdSelect.value;
             }
         });
 
-        // Optional: Update current address if household changes while checkbox is checked
         householdSelect.addEventListener('change', function () {
             if (checkbox.checked) {
                 currentAddressSelect.value = this.value;
@@ -170,6 +184,4 @@
         });
     });
 </script>
-
-
 @endsection

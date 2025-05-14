@@ -36,24 +36,36 @@
                 </div>
             </div>
 
+            <!-- 👪 Family Role -->
             <div class="col-md-4">
                 <label class="form-label">Family Role <span class="text-danger">*</span></label>
-                <select name="family_role_id" class="form-select" required>
-                    @foreach ($familyroles as $role)
-                        <option value="{{ $role->id }}">{{ $role->role }}</option>
-                    @endforeach
-                </select>
+                <div class="input-group">
+                    <select name="family_role_id" class="form-select" required>
+                        @foreach ($familyroles as $role)
+                            <option value="{{ $role->id }}">{{ $role->role }}</option>
+                        @endforeach
+                    </select>
+                    <a href="{{ route('familyroles.create') }}" class="btn btn-success" title="Add New Family Role">
+                        <i class="bi bi-plus-circle"></i>
+                    </a>
+                </div>
             </div>
 
+            <!-- 🏠 Current Address -->
             <div class="col-md-4">
                 <label class="form-label">Current Address <span class="text-danger">*</span></label>
-                <select name="current_address_id" id="current_address_id" class="form-select" required>
-                    @foreach ($currentaddress as $address)
-                        <option value="{{ $address->id }}">
-                            {{ $address->formatted }}
-                        </option>
-                    @endforeach
-                </select>
+                <div class="input-group">
+                    <select name="current_address_id" id="current_address_id" class="form-select" required>
+                        @foreach ($currentaddress as $address)
+                            <option value="{{ $address->id }}">
+                                {{ $address->formatted }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <a href="{{ route('addresses.create') }}" class="btn btn-success" title="Add New Address">
+                        <i class="bi bi-plus-circle"></i>
+                    </a>
+                </div>
                 <div class="form-check mt-1">
                     <input class="form-check-input" type="checkbox" id="sameAddressCheckbox">
                     <label class="form-check-label" for="sameAddressCheckbox">
@@ -61,6 +73,7 @@
                     </label>
                 </div>
             </div>
+
 
             <!-- 👤 Personal Info -->
             <div class="col-md-4">
