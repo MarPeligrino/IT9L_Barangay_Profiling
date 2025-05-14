@@ -201,6 +201,12 @@
       <a class="nav-link {{ Request::is('permitTransactions*') ? 'active' : '' }}" href="{{ route('permitTransactions.index') }}">
         <span><i class="bi bi-receipt-cutoff"></i> Permit Transactions</span>
       </a>
+      <a class="nav-link {{ Request::is('certificateTypes*') ? 'active' : '' }}" href="{{ route('certificateTypes.index') }}">
+        <span><i class="bi bi-receipt-cutoff"></i> Certificate Types</span>
+      </a>
+      <a class="nav-link {{ Request::is('barangayCertificates*') ? 'active' : '' }}" href="{{ route('barangayCertificates.index') }}">
+        <span><i class="bi bi-receipt-cutoff"></i> Barangay Certificates</span>
+      </a>
     </nav>
   </div>
 

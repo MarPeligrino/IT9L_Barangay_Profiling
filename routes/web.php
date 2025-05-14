@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\BarangayCertificateController;
 use App\Http\Controllers\BarangayEmployeeController;
 use App\Http\Controllers\BarangayPositionController;
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\BusinessPermitController;
 use App\Http\Controllers\BusinessTypeController;
+use App\Http\Controllers\CertificateTypeController;
 use App\Http\Controllers\FamilyRoleController;
 use App\Http\Controllers\PermitTransactionsController;
 use App\Http\Controllers\ResidentController;
@@ -84,3 +86,9 @@ Route::resource('permitTransactions', PermitTransactionsController::class);
 // DASHBOARD
 Route::get('/', [DashboardController::class, 'index']);
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+//CERTIFICATE TYPES WITH RESOURCE
+Route::resource('certificateTypes', CertificateTypeController::class);
+
+//CERTIFICATE TYPES WITH RESOURCE
+Route::resource('barangayCertificates', BarangayCertificateController::class);

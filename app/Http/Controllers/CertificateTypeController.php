@@ -8,11 +8,26 @@ use Illuminate\Http\Request;
 class CertificateTypeController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource with search, sort, and pagination.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $certificateTypes = CertificateType::all();
+        $query = CertificateType::query();
+
+        // Search
+        if ($search = $request->input('search')) {
+            $query->where('certificate_name', 'like', "%{$search}%");
+        }
+
+        // Sorting
+        $sortableFields = ['certificate_name', 'description', 'validity', 'fee', 'created_at', 'updated_at'];
+        $sortBy = in_array($request->input('sort_by'), $sortableFields) ? $request->input('sort_by') : 'created_at';
+        $order = $request->input('order') === 'asc' ? 'asc' : 'desc';
+
+        // Pagination with applied search & sorting
+        $certificateTypes = $query->orderBy($sortBy, $order)
+                                  ->paginate(10)
+                                  ->appends($request->except('page'));
 
         return view('certificateTypes.index', compact('certificateTypes'));
     }
@@ -33,11 +48,14 @@ class CertificateTypeController extends Controller
         $validated = $request->validate([
             'certificate_name' => 'required|string|max:255',
             'description' => 'required|string|max:255',
-            'validity' => 'required|date',
+            'validity' => 'required|integer|min:1', // Validity in days
             'fee' => 'required|numeric|min:0|max:99999.99'
         ]);
 
-        CertificateType::create($validated);
+        $certificateType = CertificateType::create($validated);
+
+        log_activity("Certificate Type added: {$certificateType->certificate_name}");
+
         return redirect()->route('certificateTypes.index')->with('success', 'Certificate Type Added');
     }
 
@@ -47,7 +65,6 @@ class CertificateTypeController extends Controller
     public function show(CertificateType $certificateType)
     {
         return view('certificateTypes.show', compact('certificateType'));
-    
     }
 
     /**
@@ -66,13 +83,15 @@ class CertificateTypeController extends Controller
         $validated = $request->validate([
             'certificate_name' => 'required|string|max:255',
             'description' => 'required|string|max:255',
-            'validity' => 'required|date',
+            'validity' => 'required|integer|min:1', // Validity in days
             'fee' => 'required|numeric|min:0|max:99999.99'
         ]);
+
         $certificateType->update($validated);
 
+        log_activity("Certificate Type updated: {$certificateType->certificate_name}");
+
         return redirect()->route('certificateTypes.index')->with('success', "Certificate updated successfully.");
-    
     }
 
     /**
@@ -80,6 +99,8 @@ class CertificateTypeController extends Controller
      */
     public function destroy(CertificateType $certificateType)
     {
+        log_activity("Certificate Type deleted: {$certificateType->certificate_name}");
+
         $certificateType->delete();
 
         return redirect()->route('certificateTypes.index')->with('success', "Certificate deleted successfully.");
