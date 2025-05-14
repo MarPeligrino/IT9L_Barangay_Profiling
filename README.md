@@ -133,3 +133,6 @@ CHANGELOG
 
 - Will need to change address search bar add address button
 - Will need to move address address from residents index to the left so modified and created on the right
+
+php artisan storage:link
+npm run dev
