@@ -15,9 +15,12 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('incident_id')->constrained('incident_reports');
+            $table->foreignId('complaint_party_id')->constrained();
             $table->foreignId('barangay_employee_id')->constrained();
             $table->text('remarks')->nullable();
-            $table->string('status');
+
+            // Updated: status is now an ENUM
+            $table->enum('status', ['pending', 'in_progress', 'resolved', 'closed']);
 
             $table->timestamps();
         });

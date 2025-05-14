@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ComplaintReportParty extends Model
+class ComplaintParty extends Model
 {
     protected $fillable = [
-        'ComplaintID',
-        'ResidentID',
-        'Role',
+        'complaint_report_id',
+        'resident_id',
+        'role',
     ];
 
     public function resident()

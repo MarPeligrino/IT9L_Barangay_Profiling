@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('complaint_report_party', function (Blueprint $table) {
+        Schema::create('complaint_report_parties', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('complaint_id')->constrained('complaints')->onDelete('cascade');
+            $table->foreignId('complaint_report_id')->constrained('complaints')->onDelete('cascade');
             $table->foreignId('resident_id')->constrained('residents')->onDelete('cascade');
-            $table->string('role'); // complainant, respondent, witness
+
+            // Changed to ENUM: restrict values to specific roles
+            $table->enum('role', ['complainant', 'respondent', 'witness']);
             
             $table->timestamps();
         });
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('complaint_report_party');
+        Schema::dropIfExists('complaint_report_parties');
     }
 };
