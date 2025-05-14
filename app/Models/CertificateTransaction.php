@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class CertificateTransaction extends Model
 {
     protected $fillable = [
-        'CertificateID',
-        'AmountPaid',
-        'PaymentDate',
-        'PaymentStatus',
+        'certificate_id',
+        'amount_paid',
+        'payment_date',
+        'payment_status',
     ];
 
-    public function barangayCertificate()
+    public function certificate()
     {
         return $this->belongsTo(BarangayCertificate::class);
     }

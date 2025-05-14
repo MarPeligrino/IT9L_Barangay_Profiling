@@ -34,7 +34,7 @@
     @endif
 
     <form method="GET" action="{{ route('barangayCertificates.index') }}" class="row g-2 mb-3 align-items-end">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="input-group">
                 <input type="text" name="search" class="form-control" placeholder="Search by resident name..." value="{{ request('search') }}">
                 <button type="submit" class="btn btn-success">

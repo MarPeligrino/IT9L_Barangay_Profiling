@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BarangayCertificate;
 use App\Models\BarangayEmployee;
+use App\Models\CertificateTransaction;
 use App\Models\CertificateType;
 use App\Models\Resident;
 use Illuminate\Http\Request;
@@ -69,15 +70,37 @@ class BarangayCertificateController extends Controller
             'purpose' => 'required|string|max:1000',
             'issued_date' => 'required|date',
             'status' => 'required|string|max:50',
+
+            // Transaction fields
+            'amount_paid' => 'required|numeric|min:0',
+            'payment_date' => 'required|date',
+            'payment_status' => 'required|string|max:50',
         ]);
 
-        $certificate = BarangayCertificate::create($validated);
+        // Create Barangay Certificate
+        $certificate = BarangayCertificate::create([
+            'resident_id' => $validated['resident_id'],
+            'barangay_employee_id' => $validated['barangay_employee_id'],
+            'certificate_type_id' => $validated['certificate_type_id'],
+            'purpose' => $validated['purpose'],
+            'issued_date' => $validated['issued_date'],
+            'status' => $validated['status'],
+        ]);
 
-        // 🔔 Log activity
-        log_activity("Barangay Certificate issued to Resident ID {$certificate->resident_id}");
+        // Log Activity
+        log_activity("Barangay Certificate issued for Resident ID {$certificate->resident_id}");
 
-        return redirect()->route('barangayCertificates.index')->with('success', 'Barangay Certificate Added');
+        // Create Certificate Transaction using user-provided values
+        CertificateTransaction::create([
+            'certificate_id' => $certificate->id,
+            'amount_paid' => $validated['amount_paid'],
+            'payment_date' => $validated['payment_date'],
+            'payment_status' => $validated['payment_status'],
+        ]);
+
+        return redirect()->route('barangayCertificates.index')->with('success', 'Certificate issued and transaction recorded.');
     }
+
 
     public function show(BarangayCertificate $barangayCertificate)
     {
@@ -102,14 +125,38 @@ class BarangayCertificateController extends Controller
             'purpose' => 'required|string|max:1000',
             'issued_date' => 'required|date',
             'status' => 'required|string|max:50',
+
+            // Transaction fields
+            'amount_paid' => 'required|numeric|min:0',
+            'payment_date' => 'required|date',
+            'payment_status' => 'required|string|max:50',
         ]);
 
-        $barangayCertificate->update($validated);
+        // Update the certificate
+        $barangayCertificate->update([
+            'resident_id' => $validated['resident_id'],
+            'barangay_employee_id' => $validated['barangay_employee_id'],
+            'certificate_type_id' => $validated['certificate_type_id'],
+            'purpose' => $validated['purpose'],
+            'issued_date' => $validated['issued_date'],
+            'status' => $validated['status'],
+        ]);
 
+        // Log activity
         log_activity("Barangay Certificate updated for Resident ID {$barangayCertificate->resident_id}");
 
-        return redirect()->route('barangayCertificates.index')->with('success', 'Barangay Certificate updated successfully.');
+        // Update or create the associated certificate transaction
+        $transaction = CertificateTransaction::firstOrNew(['certificate_id' => $barangayCertificate->id]);
+
+        $transaction->fill([
+            'amount_paid' => $validated['amount_paid'],
+            'payment_date' => $validated['payment_date'],
+            'payment_status' => $validated['payment_status'],
+        ])->save();
+
+        return redirect()->route('barangayCertificates.index')->with('success', 'Barangay Certificate and transaction updated successfully.');
     }
+
 
     public function destroy(BarangayCertificate $barangayCertificate)
     {

@@ -20,4 +20,10 @@ class BarangayCertificate extends Model
     public function barangayEmployee() {
         return $this->belongsTo(BarangayEmployee::class);
     }
+
+        public function transaction()
+    {
+        return $this->hasOne(CertificateTransaction::class, 'certificate_id');
+    }
+
 }
