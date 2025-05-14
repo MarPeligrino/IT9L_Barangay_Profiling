@@ -10,6 +10,7 @@ use App\Http\Controllers\PermitTransactionsController;
 use App\Http\Controllers\ResidentController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\DashboardController;
+<<<<<<< HEAD
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\UserController;
@@ -53,6 +54,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/settings', [UserController::class, 'settings'])->name('settings');
     Route::put('/settings', [UserController::class, 'updateSettings'])->name('settings.update');
 });
+=======
+use Illuminate\Support\Facades\Route;
+>>>>>>> fix-auth
 
 //RESIDENTS WITH RESOURCE
 Route::resource('residents', ResidentController::class);
@@ -79,4 +83,12 @@ Route::resource('businessTypes', BusinessTypeController::class);
 Route::resource('businessPermits', BusinessPermitController::class);
 
 //BUSINESSPERMIT WITH RESOURCE
+<<<<<<< HEAD
 Route::resource('permitTransactions', PermitTransactionsController::class);
+=======
+Route::resource('permitTransactions', PermitTransactionsController::class);
+
+// DASHBOARD
+Route::get('/', [DashboardController::class, 'index']);
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+>>>>>>> fix-auth

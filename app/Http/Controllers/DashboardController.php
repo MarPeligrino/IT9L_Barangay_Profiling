@@ -8,11 +8,19 @@ use App\Models\Resident;
 use App\Models\Address;
 use App\Models\BarangayEmployee;
 use App\Models\Business;
+<<<<<<< HEAD
 use App\Models\FamilyRole;
 use App\Models\BarangayPosition;
 use App\Models\BusinessType;
 use App\Models\BusinessPermit;
 use App\Models\PermitTransaction;
+=======
+use App\Models\BusinessType;
+use App\Models\BusinessPermit;
+use App\Models\PermitTransaction;
+use App\Models\FamilyRole;
+use App\Models\BarangayPosition;
+>>>>>>> fix-auth
 use App\Models\RecentActivity;
 
 class DashboardController extends Controller

@@ -106,6 +106,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
+<<<<<<< HEAD
 
     .profile-image {
       width: 30px;
@@ -114,6 +115,8 @@
       border-radius: 50%;
       margin-right: 8px;
     }
+=======
+>>>>>>> fix-auth
   </style>
 </head>
 <body>
@@ -123,17 +126,22 @@
     <a class="navbar-brand mb-0 h1" href="{{ route('dashboard') }}">Barangay Profiling</a>
 
     <div class="ms-auto d-flex align-items-center">
+<<<<<<< HEAD
       <span class="text-white me-3">
         <img src="{{ Auth::user() && Auth::user()->profile_image ? Storage::url(Auth::user()->profile_image) : 'https://via.placeholder.com/30' }}" 
              alt="Profile Image" 
              class="profile-image">
         Welcome {{ Auth::user() ? Auth::user()->name : 'User' }}
       </span>
+=======
+      <span class="text-white me-3">Welcome User</span>
+>>>>>>> fix-auth
       <div class="dropdown">
         <a href="#" class="text-white dropdown-toggle" id="settingsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
           <i class="bi bi-gear-fill fs-5"></i>
         </a>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="settingsDropdown">
+<<<<<<< HEAD
           <li><a class="dropdown-item" href="{{ route('profile') }}">Open Profile</a></li>
           <li><a class="dropdown-item" href="{{ route('settings') }}">Settings</a></li>
           <li><hr class="dropdown-divider" /></li>
@@ -146,6 +154,12 @@
               @csrf
             </form>
           </li>
+=======
+          <li><a class="dropdown-item" href="#">Open Profile</a></li>
+          <li><a class="dropdown-item" href="#">Settings</a></li>
+          <li><hr class="dropdown-divider" /></li>
+          <li><a class="dropdown-item" href="#">Logout</a></li>
+>>>>>>> fix-auth
         </ul>
       </div>
     </div>
@@ -222,4 +236,8 @@
     });
   </script>
 </body>
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> fix-auth
