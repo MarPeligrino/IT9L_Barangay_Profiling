@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Barangay Profiling System</title>
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"/>
 
@@ -35,6 +36,14 @@
       left: 0;
       z-index: 1000;
       overflow-x: hidden;
+    }
+
+    .sidebar.collapsed-sidebar {
+      width: 0 !important;
+      padding: 0 !important;
+      overflow: hidden;
+      pointer-events: none;
+      opacity: 0;
     }
 
     .sidebar .nav-link {
@@ -77,14 +86,6 @@
       transition: all 0.3s ease;
     }
 
-    .collapsed-sidebar {
-      width: 0 !important;
-      padding: 0 !important;
-      overflow: hidden;
-      pointer-events: none;
-      opacity: 0;
-    }
-
     .collapsed-content {
       margin-left: 0 !important;
     }
@@ -117,121 +118,134 @@
   </style>
 </head>
 <body>
-  <!-- Top Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary px-3 fixed-top">
-    <button class="btn me-2" id="sidebarToggle">☰</button>
-    <a class="navbar-brand mb-0 h1" href="{{ route('dashboard') }}">Barangay Profiling</a>
 
-    <div class="ms-auto d-flex align-items-center">
-      <span class="text-white me-3">
-        <img src="{{ Auth::user() && Auth::user()->profile_image ? Storage::url(Auth::user()->profile_image) : 'https://via.placeholder.com/30' }}" 
-             alt="Profile Image" 
-             class="profile-image">
-        Welcome {{ Auth::user() ? Auth::user()->name : 'User' }}
-      </span>
-      <div class="dropdown">
-        <a href="#" class="text-white dropdown-toggle" id="settingsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-          <i class="bi bi-gear-fill fs-5"></i>
-        </a>
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="settingsDropdown">
-          <li><a class="dropdown-item" href="{{ route('profile') }}">Open Profile</a></li>
-          <li><a class="dropdown-item" href="{{ route('settings') }}">Settings</a></li>
-          <li><hr class="dropdown-divider" /></li>
-          <li>
-            <a class="dropdown-item" href="{{ route('logout') }}" 
-               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-              Logout
-            </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-              @csrf
-            </form>
-          </li>
-        </ul>
-      </div>
+<!-- Top Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary px-3 fixed-top">
+  <button class="btn me-2" id="sidebarToggle">☰</button>
+  <a class="navbar-brand mb-0 h1" href="{{ route('dashboard') }}">Barangay Profiling</a>
+
+  <div class="ms-auto d-flex align-items-center">
+    <span class="text-white me-3">
+      <img src="{{ Auth::user() && Auth::user()->profile_image ? Storage::url(Auth::user()->profile_image) : 'https://via.placeholder.com/30' }}" 
+           alt="Profile Image" 
+           class="profile-image">
+      Welcome {{ Auth::user() ? Auth::user()->name : 'User' }}
+    </span>
+    <div class="dropdown">
+      <a href="#" class="text-white dropdown-toggle" id="settingsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bi bi-gear-fill fs-5"></i>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="settingsDropdown">
+        <li><a class="dropdown-item" href="{{ route('profile') }}">Open Profile</a></li>
+        <li><a class="dropdown-item" href="{{ route('settings') }}">Settings</a></li>
+        <li><hr class="dropdown-divider" /></li>
+        <li>
+          <a class="dropdown-item" href="{{ route('logout') }}" 
+             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            Logout
+          </a>
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form>
+        </li>
+      </ul>
     </div>
+  </div>
+</nav>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+  <nav class="nav flex-column">
+
+    <!-- Dashboard -->
+    <div class="section-title">Dashboard</div>
+    <a class="nav-link {{ Request::is('/') || Request::is('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
+      <span><i class="bi bi-house-door-fill"></i> Home</span>
+    </a>
+
+    <!-- Barangay Info -->
+    @php
+      $barangayActive = Request::is('residents*') || Request::is('addresses*') || Request::is('familyroles*');
+    @endphp
+    <a class="nav-link {{ $barangayActive ? 'active' : '' }}" data-bs-toggle="collapse" href="#barangayInfoMenu" role="button" aria-expanded="{{ $barangayActive ? 'true' : 'false' }}">
+      <span><i class="bi bi-info-circle-fill"></i> Barangay Info</span>
+      <i class="bi bi-chevron-right arrow-icon"></i>
+    </a>
+    <div class="collapse submenu {{ $barangayActive ? 'show' : '' }}" id="barangayInfoMenu">
+      <a class="nav-link {{ Request::is('residents*') ? 'active' : '' }}" href="{{ route('residents.index') }}"><span>Residents</span></a>
+      <a class="nav-link {{ Request::is('addresses*') ? 'active' : '' }}" href="{{ route('addresses.index') }}"><span>Addresses</span></a>
+      <a class="nav-link {{ Request::is('familyroles*') ? 'active' : '' }}" href="{{ route('familyroles.index') }}"><span>Family Roles</span></a>
+    </div>
+
+    <!-- Barangay Officials -->
+    @php
+      $officialsActive = Request::is('barangaypositions*') || Request::is('barangayemployees*');
+    @endphp
+    <a class="nav-link {{ $officialsActive ? 'active' : '' }}" data-bs-toggle="collapse" href="#officialsMenu" role="button" aria-expanded="{{ $officialsActive ? 'true' : 'false' }}">
+      <span><i class="bi bi-person-badge-fill"></i> Barangay Officials</span>
+      <i class="bi bi-chevron-right arrow-icon"></i>
+    </a>
+    <div class="collapse submenu {{ $officialsActive ? 'show' : '' }}" id="officialsMenu">
+      <a class="nav-link {{ Request::is('barangaypositions*') ? 'active' : '' }}" href="{{ route('barangaypositions.index') }}"><span>Positions</span></a>
+      <a class="nav-link {{ Request::is('barangayemployees*') ? 'active' : '' }}" href="{{ route('barangayemployees.index') }}"><span>Employees</span></a>
+    </div>
+
+    <!-- Business -->
+    <div class="section-title mt-3">Business</div>
+    <a class="nav-link {{ Request::is('businesses*') ? 'active' : '' }}" href="{{ route('businesses.index') }}">
+      <span><i class="bi bi-building"></i> Business</span>
+    </a>
+    <a class="nav-link {{ Request::is('businessTypes*') ? 'active' : '' }}" href="{{ route('businessTypes.index') }}">
+      <span><i class="bi bi-tags-fill"></i> Business Types</span>
+    </a>
+
+    <!-- Certificates & Permits -->
+    @php
+      $docsActive = Request::is('certificateTypes*') || Request::is('barangayCertificates*') || Request::is('businessPermits*') || Request::is('permitTransactions*');
+    @endphp
+    <div class="section-title mt-3">Certificates & Permits</div>
+    <a class="nav-link {{ $docsActive ? 'active' : '' }}" data-bs-toggle="collapse" href="#documentsMenu" role="button" aria-expanded="{{ $docsActive ? 'true' : 'false' }}">
+      <span><i class="bi bi-folder-fill"></i> Documents</span>
+      <i class="bi bi-chevron-right arrow-icon"></i>
+    </a>
+    <div class="collapse submenu {{ $docsActive ? 'show' : '' }}" id="documentsMenu">
+      <a class="nav-link {{ Request::is('certificateTypes*') ? 'active' : '' }}" href="{{ route('certificateTypes.index') }}"><span>Certificate Types</span></a>
+      <a class="nav-link {{ Request::is('barangayCertificates*') ? 'active' : '' }}" href="{{ route('barangayCertificates.index') }}"><span>Barangay Certificates</span></a>
+      <a class="nav-link {{ Request::is('businessPermits*') ? 'active' : '' }}" href="{{ route('businessPermits.index') }}"><span>Business Permits</span></a>
+      <a class="nav-link {{ Request::is('permitTransactions*') ? 'active' : '' }}" href="{{ route('permitTransactions.index') }}"><span>Permit Transactions</span></a>
+    </div>
+
+    <!-- Reports -->
+    @php
+      $reportsActive = Request::is('incidentReports*') || Request::is('complaints*');
+    @endphp
+    <div class="section-title mt-3">Reports</div>
+    <a class="nav-link {{ $reportsActive ? 'active' : '' }}" data-bs-toggle="collapse" href="#reportsMenu" role="button" aria-expanded="{{ $reportsActive ? 'true' : 'false' }}">
+      <span><i class="bi bi-flag-fill"></i> Reports</span>
+      <i class="bi bi-chevron-right arrow-icon"></i>
+    </a>
+    <div class="collapse submenu {{ $reportsActive ? 'show' : '' }}" id="reportsMenu">
+      <a class="nav-link {{ Request::is('incidentReports*') ? 'active' : '' }}" href="{{ route('incidentReports.index') }}"><span>Incident Reports</span></a>
+      <a class="nav-link {{ Request::is('complaints*') ? 'active' : '' }}" href="{{ route('complaints.index') }}"><span>Complaint Reports</span></a>
+    </div>
+
   </nav>
+</div>
 
-  <!-- Sidebar -->
-  <div class="sidebar" id="sidebar">
-    <nav class="nav flex-column">
-      <!-- Dashboard Section -->
-      <div class="section-title">Dashboard</div>
-      <a class="nav-link {{ Request::is('/') || Request::is('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
-        <span><i class="bi bi-house-door-fill"></i> Home</span>
-      </a>
+<!-- Main Content -->
+<div class="main-content" id="mainContent">
+  @yield('content')
+</div>
 
-      <!-- Barangay Info -->
-      @php
-        $barangayActive = Request::is('residents*') || Request::is('addresses*') || Request::is('familyroles*');
-      @endphp
-      <a class="nav-link {{ $barangayActive ? 'active' : '' }}" data-bs-toggle="collapse" href="#barangayInfoMenu" role="button" aria-expanded="{{ $barangayActive ? 'true' : 'false' }}" aria-controls="barangayInfoMenu">
-        <span><i class="bi bi-info-circle-fill"></i> Barangay Info</span>
-        <i class="bi bi-chevron-right arrow-icon"></i>
-      </a>
-      <div class="collapse submenu {{ $barangayActive ? 'show' : '' }}" id="barangayInfoMenu">
-        <a class="nav-link {{ Request::is('residents*') ? 'active' : '' }}" href="{{ route('residents.index') }}"><span>Residents</span></a>
-        <a class="nav-link {{ Request::is('addresses*') ? 'active' : '' }}" href="{{ route('addresses.index') }}"><span>Addresses</span></a>
-        <a class="nav-link {{ Request::is('familyroles*') ? 'active' : '' }}" href="{{ route('familyroles.index') }}"><span>Family Roles</span></a>
-      </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  const toggleBtn = document.getElementById('sidebarToggle');
+  const sidebar = document.getElementById('sidebar');
+  const mainContent = document.getElementById('mainContent');
 
-      <!-- Barangay Officials -->
-      @php
-        $officialsActive = Request::is('barangaypositions*') || Request::is('barangayemployees*');
-      @endphp
-      <a class="nav-link {{ $officialsActive ? 'active' : '' }}" data-bs-toggle="collapse" href="#officialsMenu" role="button" aria-expanded="{{ $officialsActive ? 'true' : 'false' }}" aria-controls="officialsMenu">
-        <span><i class="bi bi-person-badge-fill"></i> Barangay Officials</span>
-        <i class="bi bi-chevron-right arrow-icon"></i>
-      </a>
-      <div class="collapse submenu {{ $officialsActive ? 'show' : '' }}" id="officialsMenu">
-        <a class="nav-link {{ Request::is('barangaypositions*') ? 'active' : '' }}" href="{{ route('barangaypositions.index') }}"><span>Positions</span></a>
-        <a class="nav-link {{ Request::is('barangayemployees*') ? 'active' : '' }}" href="{{ route('barangayemployees.index') }}"><span>Employees</span></a>
-      </div>
-
-      <!-- Business Section -->
-      <div class="section-title mt-3">Business</div>
-      <a class="nav-link {{ Request::is('businesses*') ? 'active' : '' }}" href="{{ route('businesses.index') }}">
-        <span><i class="bi bi-building"></i> Business</span>
-      </a>
-      <a class="nav-link {{ Request::is('businessTypes*') ? 'active' : '' }}" href="{{ route('businessTypes.index') }}">
-        <span><i class="bi bi-tags-fill"></i> Business Types</span>
-      </a>
-      <a class="nav-link {{ Request::is('businessPermits*') ? 'active' : '' }}" href="{{ route('businessPermits.index') }}">
-        <span><i class="bi bi-card-checklist"></i> Business Permits</span>
-      </a>
-      <a class="nav-link {{ Request::is('permitTransactions*') ? 'active' : '' }}" href="{{ route('permitTransactions.index') }}">
-        <span><i class="bi bi-receipt-cutoff"></i> Permit Transactions</span>
-      </a>
-      <a class="nav-link {{ Request::is('certificateTypes*') ? 'active' : '' }}" href="{{ route('certificateTypes.index') }}">
-        <span><i class="bi bi-receipt-cutoff"></i> Certificate Types</span>
-      </a>
-      <a class="nav-link {{ Request::is('barangayCertificates*') ? 'active' : '' }}" href="{{ route('barangayCertificates.index') }}">
-        <span><i class="bi bi-receipt-cutoff"></i> Barangay Certificates</span>
-      </a>
-      <a class="nav-link {{ Request::is('incidentReports*') ? 'active' : '' }}" href="{{ route('incidentReports.index') }}">
-        <span><i class="bi bi-receipt-cutoff"></i> Incident Reports </span>
-      </a>
-      <a class="nav-link {{ Request::is('complaints*') ? 'active' : '' }}" href="{{ route('complaints.index') }}">
-        <span><i class="bi bi-receipt-cutoff"></i> Complaints Reports </span>
-      </a>
-    </nav>
-  </div>
-
-  <!-- Main Content -->
-  <div class="main-content" id="mainContent">
-    @yield('content')
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    const toggleBtn = document.getElementById('sidebarToggle');
-    const sidebar = document.getElementById('sidebar');
-    const mainContent = document.getElementById('mainContent');
-
-    toggleBtn.addEventListener('click', () => {
-      sidebar.classList.toggle('collapsed-sidebar');
-      mainContent.classList.toggle('collapsed-content');
-      toggleBtn.classList.toggle('rotated');
-    });
-  </script>
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('collapsed-sidebar');
+    mainContent.classList.toggle('collapsed-content');
+    toggleBtn.classList.toggle('rotated');
+  });
+</script>
 </body>
 </html>

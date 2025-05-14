@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BarangayCertificate;
+use App\Models\Complaint;
+use App\Models\IncidentReport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Resident;
@@ -44,6 +47,9 @@ class DashboardController extends Controller
             'recentActivities'    => RecentActivity::latest()->take(5)->get(),
             'residentTrends'      => $residentTrends,
             'permitTrends'        => $permitTrends,
+            'incidentReportsCount' => IncidentReport::count(),
+            'complaintsCount' => Complaint::count(),
+            'certificatesCount' => BarangayCertificate::count(),
         ]);
     }
 }

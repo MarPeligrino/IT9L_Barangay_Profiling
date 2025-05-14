@@ -16,13 +16,17 @@
     .quick-actions .btn {
         min-width: 180px;
     }
+
+    #trendChart {
+        max-height: 300px;
+    }
 </style>
 
 <div class="container-fluid">
     <!-- Welcome -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h2>Welcome, User!</h2>
+            <h2>Welcome, {{ Auth::user()->name ?? 'User' }}!</h2>
             <p class="text-muted">Today is {{ \Carbon\Carbon::now()->format('l, F j, Y') }}</p>
         </div>
     </div>
@@ -35,11 +39,16 @@
         <x-dashboard.card count="{{ $roleCount }}" label="Family Roles" icon="people-fill" color="secondary" route="familyroles.index" />
     </div>
 
-    <!-- 🏢 Business & Permits -->
-    <h4 class="mt-5">🏢 Business & Permits</h4>
+    <!-- 🏢 Business -->
+    <h4 class="mt-5">🏢 Business</h4>
     <div class="row g-3">
         <x-dashboard.card count="{{ $businessCount }}" label="Registered Businesses" icon="briefcase-fill" color="danger" route="businesses.index" />
         <x-dashboard.card count="{{ $businessTypeCount }}" label="Business Types" icon="tags-fill" color="dark" route="businessTypes.index" />
+    </div>
+
+    <!-- 📜 Certificates & Permits -->
+    <h4 class="mt-5">📜 Certificates & Permits</h4>
+    <div class="row g-3">
         <x-dashboard.card count="{{ $permitCount }}" label="Permits Issued" icon="file-earmark-text-fill" color="primary" route="businessPermits.index" />
         <x-dashboard.card count="{{ $transactionCount }}" label="Permit Transactions" icon="receipt-cutoff" color="info" route="permitTransactions.index" />
     </div>
@@ -60,9 +69,11 @@
         <a href="{{ route('permitTransactions.index') }}" class="btn btn-outline-info"><i class="bi bi-receipt me-1"></i> View Transactions</a>
     </div>
 
-    <!-- 📈 Trends -->
+    <!-- 📈 Monthly Trends -->
     <h4>📈 Monthly Trends</h4>
-    <canvas id="trendChart" height="100"></canvas>
+    <div class="card shadow-sm p-3">
+        <canvas id="trendChart"></canvas>
+    </div>
 
     <!-- 🕘 Recent Activity -->
     <div class="mt-5" id="recentActivity">
@@ -116,8 +127,14 @@
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             scales: {
                 y: { beginAtZero: true }
+            },
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
             }
         }
     });
