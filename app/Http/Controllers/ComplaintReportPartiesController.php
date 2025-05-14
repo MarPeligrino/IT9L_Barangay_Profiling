@@ -3,18 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Complaint;
-use App\Models\ComplaintReportParty;
+use App\Models\ComplaintReportParties;
 use App\Models\Resident;
 use Illuminate\Http\Request;
 
-class ComplaintPartyController extends Controller
+class ComplaintReportPartiesController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $complaintReportParty = ComplaintReportParty::with(['resident', 'complaintReport'])->get();
+        $complaintReportParty = ComplaintReportParties::with(['resident', 'complaintReport'])->get();
 
         return view('complaintParty.index', compact('complaintReportParty'));
     
@@ -41,14 +41,14 @@ class ComplaintPartyController extends Controller
             'role' => 'required|string|max:50' ,
         ]);
 
-        ComplaintReportParty::create($validated);
+        ComplaintReportParties::create($validated);
         return redirect()->route('complaintParty.index')->with('success', 'Complaint Party Added');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(ComplaintReportParty $complaintReportParty)
+    public function show(ComplaintReportParties $complaintReportParty)
     {
         return view('complaintParty.show', compact('complaintReportParty'));
     }
@@ -56,7 +56,7 @@ class ComplaintPartyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ComplaintReportParty $complaintReportParty)
+    public function edit(ComplaintReportParties $complaintReportParty)
     {
         $residents = Resident::all();
         $complaintReports = Complaint::all();
@@ -66,7 +66,7 @@ class ComplaintPartyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ComplaintReportParty $complaintReportParty)
+    public function update(Request $request, ComplaintReportParties $complaintReportParty)
     {
         $validated = $request->validate([
             'complaint_id' => 'required|exists:complaints,id',
@@ -81,7 +81,7 @@ class ComplaintPartyController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ComplaintReportParty $complaintReportParty)
+    public function destroy(ComplaintReportParties $complaintReportParty)
     {
         $complaintReportParty->delete();
 

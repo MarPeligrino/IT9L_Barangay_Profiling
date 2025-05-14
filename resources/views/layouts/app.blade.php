@@ -210,6 +210,9 @@
       <a class="nav-link {{ Request::is('incidentReports*') ? 'active' : '' }}" href="{{ route('incidentReports.index') }}">
         <span><i class="bi bi-receipt-cutoff"></i> Incident Reports </span>
       </a>
+      <a class="nav-link {{ Request::is('complaints*') ? 'active' : '' }}" href="{{ route('complaints.index') }}">
+        <span><i class="bi bi-receipt-cutoff"></i> Complaints Reports </span>
+      </a>
     </nav>
   </div>
 

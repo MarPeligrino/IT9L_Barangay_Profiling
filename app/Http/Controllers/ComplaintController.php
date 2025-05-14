@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BarangayEmployee;
 use App\Models\Complaint;
-use App\Models\ComplaintParty;
+use App\Models\ComplaintReportParties;
 use App\Models\IncidentReport;
 use App\Models\Resident;
 use Illuminate\Http\Request;
@@ -118,7 +118,7 @@ class ComplaintController extends Controller
 
         foreach ($request->input('parties', []) as $partyData) {
             if (isset($partyData['id'])) {
-                $party = ComplaintParty::find($partyData['id']);
+                $party = ComplaintReportParties::find($partyData['id']);
                 if ($party && $party->complaint_id == $complaint->id) {
                     $party->update([
                         'resident_id' => $partyData['resident_id'],

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('complaint_report_parties', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('complaint_report_id')->constrained('complaints')->onDelete('cascade');
+            $table->foreignId('complaint_id')->constrained('complaints')->onDelete('cascade');
             $table->foreignId('resident_id')->constrained('residents')->onDelete('cascade');
 
             // Changed to ENUM: restrict values to specific roles

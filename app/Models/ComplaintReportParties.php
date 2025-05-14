@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ComplaintParty extends Model
+class ComplaintReportParties extends Model
 {
     protected $fillable = [
         'complaint_report_id',

@@ -8,18 +8,17 @@ class Complaint extends Model
 {
     protected $fillable = [
         'incident_id',
-        'complaint_party_id',
+        'complaint_report_party_id',
         'barangay_employee_id',
         'remarks',
         'status',
     ];
 
-    public function residents()
+    public function parties()
     {
-        return $this->belongsToMany(Resident::class, 'complaint_report_party')
-                    ->withPivot('role')
-                    ->withTimestamps();
+        return $this->hasMany(ComplaintReportParties::class);
     }
+
     public function barangayEmployee()
     {
         return $this->belongsTo(BarangayEmployee::class);

@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('incident_id')->constrained('incident_reports');
-            $table->foreignId('complaint_party_id')->constrained();
             $table->foreignId('barangay_employee_id')->constrained();
             $table->text('remarks')->nullable();
 
