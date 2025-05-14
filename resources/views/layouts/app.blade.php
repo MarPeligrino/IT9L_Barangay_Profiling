@@ -207,6 +207,9 @@
       <a class="nav-link {{ Request::is('barangayCertificates*') ? 'active' : '' }}" href="{{ route('barangayCertificates.index') }}">
         <span><i class="bi bi-receipt-cutoff"></i> Barangay Certificates</span>
       </a>
+      <a class="nav-link {{ Request::is('incidentReports*') ? 'active' : '' }}" href="{{ route('incidentReports.index') }}">
+        <span><i class="bi bi-receipt-cutoff"></i> Incident Reports </span>
+      </a>
     </nav>
   </div>
 

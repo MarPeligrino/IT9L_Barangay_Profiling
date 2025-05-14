@@ -17,7 +17,9 @@ return new class extends Migration
             $table->foreignId('barangay_employee_id')->constrained();
             $table->date('report_date');
             $table->text('remarks')->nullable();
-            $table->string('status');
+
+            // Change: define 'status' as an ENUM
+            $table->enum('status', ['pending', 'in_progress', 'resolved', 'closed']);
 
             $table->timestamps();
         });
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('incident__reports');
+        Schema::dropIfExists('incident_reports'); // Also fixed table name from 'incident__reports'
     }
 };

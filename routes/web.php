@@ -8,6 +8,7 @@ use App\Http\Controllers\BusinessPermitController;
 use App\Http\Controllers\BusinessTypeController;
 use App\Http\Controllers\CertificateTypeController;
 use App\Http\Controllers\FamilyRoleController;
+use App\Http\Controllers\IncidentReportController;
 use App\Http\Controllers\PermitTransactionsController;
 use App\Http\Controllers\ResidentController;
 use App\Http\Controllers\AddressController;
@@ -92,3 +93,6 @@ Route::resource('certificateTypes', CertificateTypeController::class);
 
 //CERTIFICATE TYPES WITH RESOURCE
 Route::resource('barangayCertificates', BarangayCertificateController::class);
+
+//INCIDENT REPORT WITH RESOURCE
+Route::resource('incidentReports', IncidentReportController::class);
