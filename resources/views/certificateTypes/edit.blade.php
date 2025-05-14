@@ -32,7 +32,16 @@
 
             <div class="col-md-12">
                 <label for="description" class="form-label">Description <span class="text-danger">*</span></label>
-                <textarea name="description" class="form-control" rows="3" required>{{ old('description', $certificateType->description) }}</textarea>
+                <textarea name="description" class="form-control" rows="5" required>{{ old('description', $certificateType->description) }}</textarea>
+
+                <div class="form-text mt-1">
+                    Please include the following placeholders in your description:
+                </div>
+
+                <div class="alert alert-info small mt-2" role="alert">
+                    <strong>Example:</strong><br>
+                    This is to certify that <code>[Name]</code>, of legal age, <code>[civil status]</code>, and a bonafide resident of <code>[complete address]</code>, Barangay <code>[Barangay]</code>, Municipality of <code>[Municipality]</code>, Province of <code>[Province]</code>, is known to this office to be a person of good moral character and has no derogatory record or pending case filed in this barangay as of this date. This certification is being issued upon the request of the above-named person for the purpose of <code>[purpose]</code>.
+                </div>
             </div>
 
             <div class="col-md-6">

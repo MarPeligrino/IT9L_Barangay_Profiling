@@ -102,10 +102,36 @@ class BarangayCertificateController extends Controller
     }
 
 
-    public function show(BarangayCertificate $barangayCertificate)
+    public function show($id)
     {
-        return view('barangayCertificates.show', compact('barangayCertificate'));
+        $certificate = BarangayCertificate::with([
+            'certificateType',
+            'resident.household',
+            'barangayEmployee'
+        ])->findOrFail($id);
+
+        // Replace placeholders
+        $description = $certificate->certificateType->description;
+
+        $description = $certificate->certificateType->description ?? '';
+
+        $replacements = [
+            '[Name]'        => $certificate->resident->first_name . ' ' . $certificate->resident->last_name,
+            '[civil status]'     => $certificate->resident->civil_status ?? 'N/A',
+            '[complete address]' => $certificate->resident->household->formatted ?? 'N/A',
+            '[Barangay]'    => $certificate->resident->household->barangay ?? 'Your Barangay',
+            '[Municipality]'     => 'Davao City',
+            '[Province]'         => 'Davao Del Sur',
+            '[purpose]'          => $certificate->purpose,
+        ];
+
+        $formattedDescription = str_replace(array_keys($replacements), array_values($replacements), $description);
+
+
+        return view('barangaycertificates.show', compact('certificate', 'formattedDescription'));
     }
+
+
 
     public function edit(BarangayCertificate $barangayCertificate)
     {

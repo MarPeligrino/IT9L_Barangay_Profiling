@@ -44,12 +44,6 @@
         </div>
 
         <div class="col-auto">
-            <button type="submit" class="btn btn-primary">
-                <i class="bi bi-funnel"></i> Filter
-            </button>
-        </div>
-
-        <div class="col-auto">
             <a href="{{ route('certificateTypes.index') }}" class="btn btn-danger">
                 <i class="bi bi-x-circle"></i> Clear
             </a>

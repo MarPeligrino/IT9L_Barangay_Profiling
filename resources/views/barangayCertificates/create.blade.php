@@ -55,16 +55,19 @@
             <div class="col-md-6">
                 <label class="form-label">Certificate Type <span class="text-danger">*</span></label>
                 <div class="input-group">
-                    <select name="certificate_type_id" class="form-select" required>
+                    <select name="certificate_type_id" class="form-select" id="certificate_type_id" required>
                         <option value="" disabled selected>-- Select Type --</option>
                         @foreach ($certificateTypes as $type)
-                            <option value="{{ $type->id }}" data-fee="{{ $type->fee }}">{{ $type->certificate_name }}</option>
+                            <option value="{{ $type->id }}" data-fee="{{ $type->fee }}">
+                                {{ $type->certificate_name }}
+                            </option>
                         @endforeach
                     </select>
                     <a href="{{ route('certificateTypes.create') }}" class="btn btn-success" title="Add New Type">
                         <i class="bi bi-plus-circle"></i>
                     </a>
                 </div>
+                <small id="feeDisplay" class="text-muted mt-1 d-block">Fee: ₱0.00</small>
             </div>
 
             <!-- Purpose -->
@@ -127,13 +130,20 @@
         issuedDateInput.value = today;
         issuedDateInput.setAttribute('max', today);
 
-        const certTypeSelect = document.querySelector('select[name="certificate_type_id"]');
+        const certTypeSelect = document.getElementById('certificate_type_id');
         const amountInput = document.getElementById('amount_paid');
+        const feeDisplay = document.getElementById('feeDisplay');
 
         certTypeSelect.addEventListener('change', function () {
             const selected = this.options[this.selectedIndex];
             const fee = selected.getAttribute('data-fee');
-            if (fee) amountInput.value = parseFloat(fee).toFixed(2);
+            if (fee) {
+                amountInput.value = parseFloat(fee).toFixed(2);
+                feeDisplay.textContent = `Fee: ₱${parseFloat(fee).toFixed(2)}`;
+            } else {
+                amountInput.value = '';
+                feeDisplay.textContent = 'Fee: ₱0.00';
+            }
         });
     });
 </script>

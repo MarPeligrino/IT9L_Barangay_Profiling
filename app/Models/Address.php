@@ -17,18 +17,6 @@ class Address extends Model
         'postal_code'
     ];
 
-    public function householdResidents() {
-        return $this->hasMany(Resident::class, 'household_id');
-    }
-
-    public function currentResidents() {
-        return $this->hasMany(Resident::class, 'current_address_id');
-    }
-
-    public function business() {
-        return $this->hasMany(Business::class, 'business_address_id');
-    }
-
     public function getFormattedAttribute()
     {
         return collect([
@@ -41,6 +29,18 @@ class Address extends Model
             $this->province,
             $this->postal_code
         ])->filter()->implode(', ');
+    }
+
+    public function householdResidents() {
+        return $this->hasMany(Resident::class, 'household_id');
+    }
+
+    public function currentResidents() {
+        return $this->hasMany(Resident::class, 'current_address_id');
+    }
+
+    public function business() {
+        return $this->hasMany(Business::class, 'business_address_id');
     }
 
 }

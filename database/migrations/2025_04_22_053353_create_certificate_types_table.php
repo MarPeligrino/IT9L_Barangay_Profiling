@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
 
             $table->string('certificate_name');
-            $table->string('description')->nullable();
+            $table->mediumText('description')->nullable();
             $table->integer('validity'); // in days/months?
             $table->decimal('fee', 8, 2);
 

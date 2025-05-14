@@ -47,7 +47,7 @@ class CertificateTypeController extends Controller
     {
         $validated = $request->validate([
             'certificate_name' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
+            'description' => 'required|string',
             'validity' => 'required|integer|min:1', // Validity in days
             'fee' => 'required|numeric|min:0|max:99999.99'
         ]);
@@ -82,7 +82,7 @@ class CertificateTypeController extends Controller
     {
         $validated = $request->validate([
             'certificate_name' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
+            'description' => 'required|string',
             'validity' => 'required|integer|min:1', // Validity in days
             'fee' => 'required|numeric|min:0|max:99999.99'
         ]);

@@ -20,19 +20,27 @@
 
         <div class="row g-3">
             <div class="col-md-6">
-                    <label class="form-label">Certificate Name <span class="text-danger">*</span></label>
-                    <input type="text" name="certificate_name" class="form-control" required>
+                <label class="form-label">Certificate Name <span class="text-danger">*</span></label>
+                <input type="text" name="certificate_name" class="form-control" required>
             </div>
 
-            <div class="mb-3">
+            <div class="mb-3 col-md-6">
                 <label for="validity" class="form-label">Validity (in days) <span class="text-danger">*</span></label>
                 <input type="number" name="validity" class="form-control" required min="1" placeholder="Ex: 30">
             </div>
 
-
             <div class="col-12">
                 <label class="form-label">Description <span class="text-danger">*</span></label>
-                <input type="text" name="description" class="form-control" required>
+                <textarea name="description" class="form-control" rows="3" required></textarea>
+
+                <div class="form-text mt-1">
+                    Please include the following placeholders in your description:
+                </div>
+
+                <div class="alert alert-info small mt-2" role="alert">
+                    <strong>Example:</strong><br>
+                    This is to certify that <code>[Name]</code>, of legal age, <code>[civil status]</code>, and a bonafide resident of <code>[complete address]</code>, Barangay <code>[Barangay]</code>, Municipality of <code>[Municipality]</code>, Province of <code>[Province]</code>, is known to this office to be a person of good moral character and has no derogatory record or pending case filed in this barangay as of this date. This certification is being issued upon the request of the above-named person for the purpose of <code>[purpose]</code>.
+                </div>
             </div>
 
             <div class="col-md-6">

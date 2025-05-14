@@ -136,3 +136,5 @@ CHANGELOG
 
 php artisan storage:link
 npm run dev
+
+This is to certify that [Name], of legal age, [civil status], and a bonafide resident of [complete address], Barangay [Barangay], Municipality of [Municipality], Province of [Province], is known to this office to be a person of good moral character and has no derogatory record or pending case filed in this barangay as of this date. This certification is being issued upon the request of the above-named person for the purpose of [purpose].
